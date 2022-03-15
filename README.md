@@ -1,2 +1,2 @@
-# Onion-Router
+# Onion-Router(Løk-Ruter)
 
