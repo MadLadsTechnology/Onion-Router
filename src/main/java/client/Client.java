@@ -1,10 +1,11 @@
 package client;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import nodeManager.Node;
+import nodeManager.NodeHandler;
+
+import java.io.*;
 import java.net.Socket;
+import java.security.PublicKey;
 
 public class Client {
 
@@ -35,5 +36,14 @@ public class Client {
         //TODO: Add more options for communication
     }
 
+    public PublicKey[] getCircuit(){
+        File nodeData = new File("src/main/resources/nodeData.json");
+        NodeHandler nodes = new NodeHandler(nodeData);
+        PublicKey[] circuit = new PublicKey[3];
+        circuit[0] = nodes.getRandomNode().getPublicKey();
+        circuit[1] = nodes.getRandomNode().getPublicKey();
+        circuit[2] = nodes.getRandomNode().getPublicKey();
+        return circuit;
+    }
 
 }

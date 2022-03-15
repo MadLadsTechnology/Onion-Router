@@ -9,7 +9,6 @@ import java.util.Set;
 
 
 public class NodeHandler{
-
     private File nodeData;
     HashMap<String, Node> listOfAllNodes;
 
