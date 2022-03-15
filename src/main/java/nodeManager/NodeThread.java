@@ -9,13 +9,9 @@ import java.net.Socket;
 /**
  * Class to handle the node logic.
  *
-
- *
- *
- *
  */
 
-public class NodeRunnable extends Thread {
+public class NodeThread extends Thread {
 
     //TODO: Add implementation as a thread maybe
 
@@ -26,7 +22,7 @@ public class NodeRunnable extends Thread {
     String message;
     boolean messageIsEncrypted;
 
-    public NodeRunnable(Socket socket, Node thisNode){
+    public NodeThread(Socket socket, Node thisNode){
         this.socket = socket;
         this.threadNumber = threadNumber;
         this.thisNode = thisNode;
@@ -64,6 +60,5 @@ public class NodeRunnable extends Thread {
 
     }
 
-    private boolean encryptionCheck(String )
 
 }
