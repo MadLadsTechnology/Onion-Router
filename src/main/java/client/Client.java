@@ -12,8 +12,8 @@ public class Client {
 
     //Simple client for now
     public static void main(String[] args) throws IOException {
-        String ip = "";
-        int port = 80;
+        String ip = "localhost";
+        int port = 6969;
         Socket clientSocket = new Socket(ip, port);
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -22,7 +22,11 @@ public class Client {
             System.out.println("Connection Acquired");
         }
 
+
+        out.println("");
+        out.println("halla");
         System.out.println("\n" + in.readLine());
+
 
         out.close();
         in.close();
