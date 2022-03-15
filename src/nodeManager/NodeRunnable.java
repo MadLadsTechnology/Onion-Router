@@ -64,4 +64,6 @@ public class NodeRunnable extends Thread {
 
     }
 
+    private boolean encryptionCheck(String )
+
 }
