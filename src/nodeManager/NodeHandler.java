@@ -1,5 +1,6 @@
 package nodeManager;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -7,12 +8,17 @@ import java.util.Set;
 
 public class NodeHandler{
 
-
+    private File nodeData;
     HashMap<String, Node> listOfAllNodes;
 
 
-    public NodeHandler(){
+    public NodeHandler(File nodeData){
+        this.nodeData = nodeData;
         listOfAllNodes = new HashMap<>();
+    }
+
+    public void setNode(Node node){
+        listOfAllNodes.put(node.getPublicKey(), node);
     }
 
     public Node getNode(String key){
