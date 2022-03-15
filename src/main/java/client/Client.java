@@ -1,7 +1,6 @@
 package client;
 
 import nodeManager.Node;
-import nodeManager.NodeHandler;
 
 import java.io.*;
 import java.net.Socket;
@@ -35,7 +34,7 @@ public class Client {
 
         //TODO: Add more options for communication
     }
-
+/*
     public PublicKey[] getCircuit(){
         File nodeData = new File("src/main/resources/nodeData.json");
         NodeHandler nodes = new NodeHandler(nodeData);
@@ -44,6 +43,6 @@ public class Client {
         circuit[1] = nodes.getRandomNode().getPublicKey();
         circuit[2] = nodes.getRandomNode().getPublicKey();
         return circuit;
-    }
+    }*/
 
 }
