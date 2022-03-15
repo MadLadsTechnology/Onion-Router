@@ -1,6 +1,7 @@
-package nodeManager;
+package network;
 
-import org.json.simple.JSONObject;
+import nodeManager.Node;
+
 
 import java.io.File;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class NodeHandler{
     }
 
     public void setNode(Node node){
-        listOfAllNodes.put(node.getPublicKey(), node);
+        listOfAllNodes.put(node.getPublicKey().toString(), node);
     }
 
     public Node getNode(String key){
