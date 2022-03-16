@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.security.PublicKey;
 import java.util.Base64;
 
+import static API.APIService.apiGETRequest;
 import static crypto.EncryptionService.rsaEncrypt;
 
 public class Client {
@@ -17,6 +18,9 @@ public class Client {
 
 
         //TODO: make api call to get a circuit
+
+        apiGETRequest("http://localhost:8080/getAllNodes");
+
         PublicKey[] circuit = ;
 
         String message = "hello there";
@@ -24,8 +28,6 @@ public class Client {
         String encryptedData = layerEncryptMessage(circuit, message);
 
         //Make api call to get address of first node
-
-
 
 
         //establishing connection with node
@@ -46,7 +48,6 @@ public class Client {
         in.close();
         clientSocket.close();
 
-        //TODO: Add more options for communication
     }
 
     /**

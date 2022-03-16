@@ -17,14 +17,10 @@ import static crypto.EncryptionService.rsaEncrypt;
 
 public class NodeThread extends Thread {
 
-    //TODO: Add implementation as a thread maybe
-
     Socket socket;
     int threadNumber;
     Node thisNode;
-    Node nextNode;
     String message;
-    boolean messageIsEncrypted;
 
     public NodeThread(Socket socket, Node thisNode){
         this.socket = socket;
@@ -67,7 +63,7 @@ public class NodeThread extends Thread {
             String publicKey = Base64.getEncoder().encodeToString(publicKeyBytes);
 
 
-            if(){
+            if(true){
 
                 byte[] messageBytes = new byte[decryptedBytes.length - publicKeyBytes.length];
 
@@ -76,6 +72,8 @@ public class NodeThread extends Thread {
                 String message = Base64.getEncoder().encodeToString(messageBytes);
 
                 //TODO: make nodeServerAPI call to get address of next node based on the public key
+
+
 
                 String ip = "localhost";
                 int port = 6969;
