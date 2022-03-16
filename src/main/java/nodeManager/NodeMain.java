@@ -5,9 +5,10 @@ import crypto.RSAKeyPairGenerator;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Scanner;
+
+import static API.APIService.apiPOSTNode;
 
 /**
  * Class to start run an instance of a node
@@ -18,7 +19,7 @@ import java.util.Scanner;
 public class NodeMain {
 
 
-    public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
+    public static void main(String[] args) throws Exception {
 
         RSAKeyPairGenerator keyGen = new RSAKeyPairGenerator();
         Node thisNode = new Node(keyGen.getPrivateKey(), keyGen.getPublicKey());
@@ -29,9 +30,7 @@ public class NodeMain {
         System.out.println("Please specify your wanted port:");
         int PORT = Integer.parseInt(in.nextLine());
 
-
-        //TODO: send node address and public key to nodeServerAPI
-
+        apiPOSTNode("http://localhost:8080/api/putNode", publicKeyAsString, "localhost:" + PORT);
 
         boolean running = true;
 

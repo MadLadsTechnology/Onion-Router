@@ -40,7 +40,7 @@ public class APIService {
 
     }
 
-    public static void apiPOSTRequest(String url, String publicKey, String address) throws Exception {
+    public static void apiPOSTNode(String url, String publicKey, String address) throws Exception {
 
         URL urlPost = new URL(url);
         HttpURLConnection http = (HttpURLConnection) urlPost.openConnection();
@@ -48,7 +48,7 @@ public class APIService {
         http.setDoOutput(true);
         http.setRequestProperty("Content-Type", "application/json");
 
-        String data = "{ 'publicKey:'" + "'" + publicKey +"', 'address':" + "'" + address + "'";
+        String data = "{ \"publicKey\":\""  + publicKey +"\", \"address\":\"" + address + "\"}";
 
         byte[] out = data.getBytes(StandardCharsets.UTF_8);
 
