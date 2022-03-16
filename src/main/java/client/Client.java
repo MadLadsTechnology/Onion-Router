@@ -68,9 +68,7 @@ public class Client {
 
         String data3 = publicKeyAsString(circuit[1]) + layer2;
 
-        String layer3 = rsaEncrypt(data3.getBytes(), circuit[0]);
-
-        return layer3;
+        return rsaEncrypt(data3.getBytes(), circuit[0]);
     }
 
     private static String publicKeyAsString(PublicKey key){
