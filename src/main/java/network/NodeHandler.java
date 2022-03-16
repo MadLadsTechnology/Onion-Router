@@ -1,21 +1,24 @@
 package network;
 
 import nodeManager.Node;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
 
 public class NodeHandler{
-    private File nodeData;
     HashMap<String, Node> listOfAllNodes;
 
 
-    public NodeHandler(File nodeData){
-        this.nodeData = nodeData;
+    public NodeHandler(){
         listOfAllNodes = new HashMap<>();
     }
 
@@ -32,8 +35,6 @@ public class NodeHandler{
         int randomKey = (int) (Math.random()*listOfAllNodes.size());
 
         return listOfAllNodes.get(keyList.get(randomKey));
-
-
     }
 
 }
