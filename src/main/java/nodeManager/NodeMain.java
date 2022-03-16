@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.Scanner;
 
 /**
@@ -29,17 +30,16 @@ public class NodeMain {
         RSAKeyPairGenerator keyGen = new RSAKeyPairGenerator();
         Node thisNode = new Node(keyGen.getPrivateKey(), keyGen.getPublicKey());
 
+        String publicKeyAsString = Base64.getEncoder().encodeToString(thisNode.publicKey.getEncoded());
+
         Scanner in = new Scanner(System.in);
         System.out.println("Please specify your wanted port:");
         int PORT = Integer.parseInt(in.nextLine());
 
 
-        JSONObject jsonObject = new JSONObject();
+        //TODO: send node address and public key to nodeServerAPI
 
-        jsonObject.put("publicKey", thisNode.getPublicKey().getEncoded());
-        jsonObject.put("port", PORT);
 
-        writeToJson(jsonObject);
         boolean running = true;
 
         ServerSocket serverSocket = new ServerSocket(PORT);
@@ -56,30 +56,6 @@ public class NodeMain {
             new Thread(new NodeThread(socket, thisNode)).start();
             System.out.println("New connection established");
         }
-
-    }
-
-    private static void writeToJson(JSONObject o) throws IOException {
-        try {
-            FileReader reader = new FileReader("./src/main/resources/nodeData.json");
-
-            JSONParser parser = new JSONParser();
-            Object readObject = parser.parse(reader);
-            JSONArray nodeArray = (JSONArray) readObject;
-
-            nodeArray.add(o);
-
-            FileWriter file = new FileWriter("./src/main/resources/nodeData.json");
-
-            //We can write any JSONArray or JSONObject instance to the file
-            file.write(nodeArray.toJSONString());
-            file.flush();
-
-        } catch (FileNotFoundException | ParseException e) {
-            e.printStackTrace();
-        }
-
-
 
     }
 

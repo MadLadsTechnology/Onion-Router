@@ -1,22 +1,14 @@
 package nodeManager;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Base64;
 
-import static crypto.encryptionService.rsaDecrypt;
-import static crypto.encryptionService.rsaEncrypt;
+import static crypto.EncryptionService.rsaDecrypt;
+import static crypto.EncryptionService.rsaEncrypt;
 
 /**
  * Class to handle the node logic.
@@ -56,17 +48,57 @@ public class NodeThread extends Thread {
 
             message = reader.readLine();
 
-            //Todo: check if message is encrypted
-
-            if(messageIsEncrypted){
-                message = rsaDecrypt(message, thisNode.getPrivateKey());
-            } else{
-                message = rsaEncrypt(message.getBytes(), thisNode.getPublicKey());
-            }
-
             reader.close();
             writer.close();
             inputStream.close();
+
+            String decryptedData = rsaDecrypt(message, thisNode.getPrivateKey());
+
+            byte[] decryptedBytes = decryptedData.getBytes();
+
+            if(decryptedBytes.length < 1024){
+
+            }
+
+            byte[] publicKeyBytes = new byte[1024];
+
+            System.arraycopy(decryptedBytes, 0, publicKeyBytes, 0, publicKeyBytes.length);
+
+            String publicKey = Base64.getEncoder().encodeToString(publicKeyBytes);
+
+
+            if(){
+
+                byte[] messageBytes = new byte[decryptedBytes.length - publicKeyBytes.length];
+
+                System.arraycopy(decryptedBytes, publicKeyBytes.length, messageBytes, 0, decryptedBytes.length-publicKeyBytes.length);
+
+                String message = Base64.getEncoder().encodeToString(messageBytes);
+
+                //TODO: make nodeServerAPI call to get address of next node based on the public key
+
+                String ip = "localhost";
+                int port = 6969;
+                Socket clientSocket = new Socket(ip, port);
+                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+                if (clientSocket.isConnected()){
+                    System.out.println("Connection Acquired");
+                }
+
+                out.write(message);
+                System.out.println("\n" + in.readLine());
+
+                out.close();
+                in.close();
+                clientSocket.close();
+
+            }else{
+
+            }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
