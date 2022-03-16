@@ -8,18 +8,16 @@ import java.net.Socket;
 import java.security.PublicKey;
 import java.util.Base64;
 
-import static API.APIService.apiGETRequest;
 import static crypto.EncryptionService.rsaEncrypt;
 
 public class Client {
-
     //Simple client for now
     public static void main(String[] args) throws Exception {
 
 
         //TODO: make api call to get a circuit
 
-        apiGETRequest("http://localhost:8080/getAllNodes");
+
 
         PublicKey[] circuit = ;
 
@@ -74,5 +72,4 @@ public class Client {
     private static String publicKeyAsString(PublicKey key){
         return Base64.getEncoder().encodeToString(key.getEncoded());
     }
-
 }
