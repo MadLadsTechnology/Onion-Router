@@ -26,7 +26,7 @@ public class NodeHandler {
         fillNodes();
     }
 
-    private void fillNodes() throws ParseException, IOException {
+    private void fillNodes() throws ParseException {
         JSONParser parser = new JSONParser();
         Object obj = parser.parse(JSON_DATA);
 

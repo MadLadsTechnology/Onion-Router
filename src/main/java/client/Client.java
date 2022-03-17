@@ -1,5 +1,7 @@
 package client;
 
+import nodeManager.NodeHandler;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
@@ -17,9 +19,9 @@ public class Client {
 
         //TODO: make api call to get a circuit
 
+        NodeHandler nodeHandler = new NodeHandler();
 
-
-        PublicKey[] circuit = ;
+        PublicKey[] circuit = nodeHandler.generateCircuit(3);
 
         String message = "hello there";
 
