@@ -1,7 +1,6 @@
 package nodeManager;
 
 import crypto.RSAKeyPairGenerator;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.security.NoSuchAlgorithmException;
