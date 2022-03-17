@@ -19,13 +19,17 @@ public class NodeHandler {
     private final String JSON_DATA;
     private ArrayList<String> publicKeys;
 
+    /**
+     * Connects to the nodeServerApi and fetches all active nodes in the network
+     * @throws Exception
+     */
     public NodeHandler() throws Exception {
         JSON_DATA = apiGETRequest("http://localhost:8080/api/getAllNodes");
         publicKeys = new ArrayList<>();
         fillNodes();
     }
 
-    /***
+    /**
      *
      * @param publicKeys
      */
@@ -36,7 +40,9 @@ public class NodeHandler {
 
     /**
      *
-     * @throws ParseException
+     * Fills the arrayList with PublicKeys with the data from the JSON data
+     *
+     * @throws ParseException if the given data can't be parsed to a json object
      */
     private void fillNodes() throws ParseException {
         JSONParser parser = new JSONParser();
@@ -49,8 +55,8 @@ public class NodeHandler {
 
     /**
      *
-     * @param amount
-     * @return
+     * @param amount amount of nodes to be used in the circuit
+     * @return the circuit of publicKeys
      * @throws NoSuchAlgorithmException
      * @throws InvalidKeySpecException
      */
@@ -61,13 +67,13 @@ public class NodeHandler {
             X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicBytes);
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             PublicKey pubKey = keyFactory.generatePublic(keySpec);
+
             if(!circuit.contains(pubKey)){
                 circuit.add(pubKey);
             }else{
                 i--;
             }
         }
-
         PublicKey[] keys = new PublicKey[circuit.size()];
 
         for(int i = 0; i<circuit.size(); i++){
@@ -78,7 +84,7 @@ public class NodeHandler {
 
     /**
      *
-     * @return
+     * @return arandom node from the publicKeys arrayList
      */
     private String getRandomNode(){
         int index = (int)(Math.random() * publicKeys.size());
@@ -87,7 +93,7 @@ public class NodeHandler {
 
     /**
      *
-     * @param node
+     * @param node the node containing the json object to be parsed
      */
     private void parseNodeObject(JSONObject node)
     {

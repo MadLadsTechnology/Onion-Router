@@ -16,6 +16,13 @@ import java.util.Base64;
 import static API.APIService.apiGETRequestWithPayload;
 
 
+/**
+ *
+ * Client class for an onion router
+ *
+ * Connects to the node network and sends a message thru it.
+ *
+ */
 public class Client {
 
 
@@ -23,7 +30,7 @@ public class Client {
 
         //Generating a node circuit to send encrypted message
         NodeHandler nodeHandler = new NodeHandler();
-        PublicKey[] circuit = nodeHandler.generateCircuit(3);
+        PublicKey[] circuit = nodeHandler.generateCircuit(5);
 
         String message = "Hello there, you are reading this on the last node!";
 
@@ -55,6 +62,8 @@ public class Client {
     }
 
     /**
+     *
+     * Takes a message and encrypts it to be sent through a circuit of nodes in the node network
      *
      * @param circuit array of publickeys the message will travel thru
      * @param message the message to be delivered to the endpoint
@@ -97,8 +106,10 @@ public class Client {
 
     /**
      *
-     * @param key
-     * @return
+     * Method to get the string value of publicKey object
+     *
+     * @param key the key object you want as a string
+     * @return the given key as a string
      */
     private static String publicKeyAsString(Key key){
         return Base64.getEncoder().encodeToString(key.getEncoded());

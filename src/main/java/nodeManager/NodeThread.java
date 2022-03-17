@@ -45,7 +45,7 @@ public class NodeThread extends Thread {
             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
 
             //Reading the data from the previous node
-            String encryptedData = reader.readLine();;
+            String encryptedData = reader.readLine();
             String encryptedAESKey = reader.readLine();
 
             //closing connection
@@ -111,9 +111,5 @@ public class NodeThread extends Thread {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
-
-
 }

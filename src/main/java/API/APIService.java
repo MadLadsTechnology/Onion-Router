@@ -7,13 +7,31 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Class to make api calls
+ */
 public class APIService {
 
+    /**
+     * Make an empty get request
+     * @param url url to the wanted target
+     * @return the response from the target
+     * @throws Exception if a connection could not be established
+     */
     public static String apiGETRequest(String url) throws Exception {
         URL urlForGetRequest = new URL(url);
         return getString(urlForGetRequest);
 
     }
+
+    /**
+     * Specific method to do a get request with one param named payload
+     *
+     * @param url target url
+     * @param payload the value payload
+     * @return the response from the target
+     * @throws Exception if the connection cannot be established
+     */
     public static String apiGETRequestWithPayload(String url, String payload) throws Exception {
         payload = stringRefactoring(payload);
         URL urlForGetRequest = new URL(url + "?payload=" + payload);
@@ -21,6 +39,13 @@ public class APIService {
 
     }
 
+    /**
+     * Method to make a http get request
+     *
+     * @param urlForGetRequest the url to the api ypu want to make a get request to
+     * @return returns teh response from the given url
+     * @throws Exception thrown if a connection could not be established
+     */
     private static String getString(URL urlForGetRequest) throws Exception {
         HttpURLConnection connection = (HttpURLConnection) urlForGetRequest.openConnection();
         connection.setRequestMethod("GET");
@@ -42,12 +67,26 @@ public class APIService {
         }
     }
 
+    /**
+     * Method to make a string url compatible
+     *
+     * @param payload the string to be refactored
+     * @return the new refactored string
+     */
     private static String stringRefactoring(String payload){
         payload = payload.replaceAll("\\+", "%2b" );
         payload = payload.replaceAll("\\\\", "%5c" );
         return payload;
     }
 
+    /**
+     * Specific post method to publish a node to the OnionRouterServer
+     *
+     * @param url the target url
+     * @param publicKey the publick key of the node
+     * @param address the ip and port of the node
+     * @throws Exception if the connection cannot be established
+     */
     public static void apiPOSTNode(String url, String publicKey, String address) throws Exception {
 
         URL urlPost = new URL(url);
