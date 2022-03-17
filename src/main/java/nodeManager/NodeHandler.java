@@ -21,7 +21,7 @@ public class NodeHandler {
     private ArrayList<String> publicKeys;
 
     public NodeHandler() throws Exception {
-        JSON_DATA = apiGETRequest("http://localhost:8080/getAllNodes");
+        JSON_DATA = apiGETRequest("http://localhost:8080/api/getAllNodes");
         publicKeys = new ArrayList<>();
         fillNodes();
     }
@@ -33,9 +33,9 @@ public class NodeHandler {
 
     private void fillNodes() throws ParseException {
         JSONParser parser = new JSONParser();
-        Object obj = parser.parse(JSON_DATA);
+        JSONObject jsonObject  = (JSONObject) parser.parse(JSON_DATA);
 
-        JSONArray publicKeyList = (JSONArray) obj;
+        JSONArray publicKeyList = (JSONArray) jsonObject.get("nodes");
 
         publicKeyList.forEach( node -> parseNodeObject( (JSONObject) node ));
     }
@@ -50,6 +50,7 @@ public class NodeHandler {
 
             circuit[i] = pubKey;
         }
+
         return circuit;
     }
 
@@ -60,12 +61,8 @@ public class NodeHandler {
 
     private void parseNodeObject(JSONObject node)
     {
-        //Get node within list
-        JSONObject nodeObject = (JSONObject) node.get("node");
-
         //Get node's public key
-        String publicKey = (String) nodeObject.get("publicKey");
+        String publicKey = (String) node.get("publicKey");
         publicKeys.add(publicKey);
-        System.out.println(publicKey);
     }
 }

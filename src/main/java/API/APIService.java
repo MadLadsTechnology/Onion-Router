@@ -13,6 +13,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Pattern;
 
 public class APIService {
 
@@ -42,6 +43,7 @@ public class APIService {
             }
             in.close();
 
+            System.out.println(response);
             return String.valueOf(response);
 
         } else {
@@ -50,7 +52,8 @@ public class APIService {
     }
 
     private static String stringRefactoring(String payload){
-        payload.replaceAll("\\+", "%2b" );
+        payload = payload.replaceAll("\\+", "%2b" );
+        payload = payload.replaceAll("\\\\", "%5c" );
         return payload;
     }
 

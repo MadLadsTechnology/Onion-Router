@@ -11,7 +11,8 @@ import java.security.PublicKey;
 import java.util.Base64;
 
 public class EncryptionService {
-    public static String rsaDecrypt(String encryptedMessage, PrivateKey privateKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+
+    public String rsaDecrypt(String encryptedMessage, PrivateKey privateKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         byte[] bytes = Base64.getDecoder().decode(encryptedMessage);
 
         Cipher decryptCipher = Cipher.getInstance("RSA");
@@ -20,7 +21,7 @@ public class EncryptionService {
         return new String(decryptCipher.doFinal(bytes));
     }
 
-    public static String rsaEncrypt(byte[] plainText, PublicKey publicKey)throws Exception {
+    public String rsaEncrypt(byte[] plainText, PublicKey publicKey)throws Exception {
         Cipher encryptCipher = Cipher.getInstance("RSA");
         encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
 
@@ -28,4 +29,5 @@ public class EncryptionService {
 
         return Base64.getEncoder().encodeToString(cipherText);
     }
+
 }
