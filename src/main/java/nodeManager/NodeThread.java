@@ -23,6 +23,7 @@ public class NodeThread extends Thread {
 
     Socket socket;
     Node thisNode;
+
     public NodeThread(Socket socket, Node thisNode){
         this.socket = socket;
         this.thisNode = thisNode;
@@ -43,45 +44,45 @@ public class NodeThread extends Thread {
             BufferedReader reader = new BufferedReader(inputStream);
             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
 
-            String encryptedData = reader.readLine();
-            //System.out.println("encryptedData: " + encryptedData);
-
+            //Reading the data from the previous node
+            String encryptedData = reader.readLine();;
             String encryptedAESKey = reader.readLine();
-            //System.out.println("encryptedAESKey: " + encryptedAESKey);
 
+            //closing connection
             reader.close();
             writer.close();
             inputStream.close();
 
             EncryptionService encryptionService = new EncryptionService();
 
-
+            //Decrypting the AES key needed to decrypt the data.
             String decryptedAESKey = encryptionService.rsaDecrypt(encryptedAESKey, thisNode.getPrivateKey());
 
-
+            //Rebuilding the AES key from the string
             byte[] decodedKey = Base64.getDecoder().decode(decryptedAESKey);
-
-            // rebuild key using SecretKeySpec
             SecretKey aesKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
 
+            //Decrypting the data with the AES key
             AESEncryption aesEncryption = new AESEncryption();
-
             String decryptedData = aesEncryption.decrypt(encryptedData, aesKey);
 
-            if(decryptedData.length() <= 512){
+
+            if(decryptedData.length() <= 736){
                 System.out.println(decryptedData);
             }else{
 
+                //Creating substrings of the decrypted data into their actual forms
                 String publicKey = decryptedData.substring(0,392);
+                String encryptedAesKey = decryptedData.substring(392,736);
+                String message = decryptedData.substring(736);
 
-                String encryptedAesKey = decryptedData.substring(393,648);
 
-                String message = decryptedData.substring(649);
-
+                //Requesting the address of the next node, based on the public key in the decrypted data
                 String address = apiGETRequestWithPayload("http://localhost:8080/api/getAddress", publicKey);
 
-                if(!address.equals("")){
+                if(!address.equals("")){ //if address is found
 
+                    //creating connection to next node
                     String ip = address.split(":")[0];
                     int port = Integer.parseInt(address.split(":")[1]);
                     Socket clientSocket = new Socket(ip, port);
@@ -89,22 +90,20 @@ public class NodeThread extends Thread {
                     BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
                     if (clientSocket.isConnected()){
-                        System.out.println("Connection Acquired");
+                        System.out.println("Connection to next node acquired");
+
+                        //Sending encrypted data to next node
+                        out.println(message);
+                        out.println(encryptedAesKey);
                     }
 
-                    out.println(message);
 
-                    out.println(encryptedAesKey);
-
-                    System.out.println("\n" + in.readLine());
-
+                   //Closing connection
                     out.close();
                     in.close();
                     clientSocket.close();
 
                 }else{
-
-                    System.out.println("No Address received");
                     System.out.println( message);
                 }
             }
