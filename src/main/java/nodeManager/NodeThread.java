@@ -35,8 +35,6 @@ public class NodeThread extends Thread {
      */
     @Override
     public void run() {
-
-
         try {
             InputStreamReader inputStream = new InputStreamReader(socket.getInputStream());
             BufferedReader reader = new BufferedReader(inputStream);

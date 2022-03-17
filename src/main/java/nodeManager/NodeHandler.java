@@ -26,6 +26,11 @@ public class NodeHandler {
         fillNodes();
     }
 
+    public NodeHandler(ArrayList<String> publicKeys) {
+        JSON_DATA = null;
+        this.publicKeys = publicKeys;
+    }
+
     private void fillNodes() throws ParseException {
         JSONParser parser = new JSONParser();
         Object obj = parser.parse(JSON_DATA);
