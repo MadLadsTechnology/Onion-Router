@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.security.PublicKey;
 import java.util.Base64;
 
+import static API.APIService.apiGETRequestWithPayload;
 import static crypto.EncryptionService.rsaDecrypt;
 import static crypto.EncryptionService.rsaEncrypt;
 
@@ -18,13 +19,11 @@ import static crypto.EncryptionService.rsaEncrypt;
 public class NodeThread extends Thread {
 
     Socket socket;
-    int threadNumber;
     Node thisNode;
     String message;
 
     public NodeThread(Socket socket, Node thisNode){
         this.socket = socket;
-        this.threadNumber = threadNumber;
         this.thisNode = thisNode;
     }
 
@@ -51,7 +50,7 @@ public class NodeThread extends Thread {
             byte[] decryptedBytes = decryptedData.getBytes();
 
             if(decryptedBytes.length < 1024){
-
+               System.out.println(Base64.getEncoder().encodeToString(decryptedBytes));
             }
 
             byte[] publicKeyBytes = new byte[1024];
@@ -60,21 +59,18 @@ public class NodeThread extends Thread {
 
             String publicKey = Base64.getEncoder().encodeToString(publicKeyBytes);
 
+            byte[] messageBytes = new byte[decryptedBytes.length - publicKeyBytes.length];
 
-            if(true){
+            String address = apiGETRequestWithPayload("http://localhost:8080/api/getAddress", publicKey);
 
-                byte[] messageBytes = new byte[decryptedBytes.length - publicKeyBytes.length];
+            if(!address.equals("")){
 
                 System.arraycopy(decryptedBytes, publicKeyBytes.length, messageBytes, 0, decryptedBytes.length-publicKeyBytes.length);
 
                 String message = Base64.getEncoder().encodeToString(messageBytes);
 
-                //TODO: make nodeServerAPI call to get address of next node based on the public key
-
-
-
-                String ip = "localhost";
-                int port = 6969;
+                String ip = address.split(":")[0];
+                int port = Integer.parseInt(address.split(":")[1]);
                 Socket clientSocket = new Socket(ip, port);
                 PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -91,7 +87,7 @@ public class NodeThread extends Thread {
                 clientSocket.close();
 
             }else{
-
+                System.out.println(Base64.getEncoder().encodeToString(messageBytes));
             }
 
 
