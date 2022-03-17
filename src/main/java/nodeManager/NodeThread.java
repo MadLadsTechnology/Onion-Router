@@ -9,8 +9,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
-import java.security.PublicKey;
 import java.util.Base64;
 
 import static API.APIService.apiGETRequestWithPayload;
@@ -46,15 +44,14 @@ public class NodeThread extends Thread {
             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
 
             String encryptedData = reader.readLine();
-            System.out.println("encryptedData: " + encryptedData);
+            //System.out.println("encryptedData: " + encryptedData);
 
             String encryptedAESKey = reader.readLine();
-            System.out.println("encryptedAESKey: " + encryptedAESKey);
+            //System.out.println("encryptedAESKey: " + encryptedAESKey);
 
             reader.close();
             writer.close();
             inputStream.close();
-
 
             EncryptionService encryptionService = new EncryptionService();
 
@@ -62,7 +59,7 @@ public class NodeThread extends Thread {
             String decryptedAESKey = encryptionService.rsaDecrypt(encryptedAESKey, thisNode.getPrivateKey());
 
 
-            byte[] decodedKey = decryptedAESKey.getBytes(StandardCharsets.UTF_8);
+            byte[] decodedKey = Base64.getDecoder().decode(decryptedAESKey);
 
             // rebuild key using SecretKeySpec
             SecretKey aesKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
@@ -71,44 +68,46 @@ public class NodeThread extends Thread {
 
             String decryptedData = aesEncryption.decrypt(encryptedData, aesKey);
 
-            if(decryptedData.length() < 256){
+            if(decryptedData.length() <= 512){
                 System.out.println(decryptedData);
-            }
-
-            String publicKey = decryptedData.substring(0,127);
-
-            String encryptedAesKey = decryptedData.substring(128,255);
-
-            String message = decryptedData.substring(256);
-
-            String address = apiGETRequestWithPayload("http://localhost:8080/api/getAddress", publicKey);
-
-            if(!address.equals("")){
-
-                String ip = address.split(":")[0];
-                int port = Integer.parseInt(address.split(":")[1]);
-                Socket clientSocket = new Socket(ip, port);
-                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
-                if (clientSocket.isConnected()){
-                    System.out.println("Connection Acquired");
-                }
-
-                out.println(message);
-
-                out.println(encryptedAesKey);
-
-                System.out.println("\n" + in.readLine());
-
-                out.close();
-                in.close();
-                clientSocket.close();
-
             }else{
-                System.out.println("apekatter" + message);
-            }
 
+                String publicKey = decryptedData.substring(0,392);
+
+                String encryptedAesKey = decryptedData.substring(393,648);
+
+                String message = decryptedData.substring(649);
+
+                String address = apiGETRequestWithPayload("http://localhost:8080/api/getAddress", publicKey);
+
+                if(!address.equals("")){
+
+                    String ip = address.split(":")[0];
+                    int port = Integer.parseInt(address.split(":")[1]);
+                    Socket clientSocket = new Socket(ip, port);
+                    PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+                    BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+                    if (clientSocket.isConnected()){
+                        System.out.println("Connection Acquired");
+                    }
+
+                    out.println(message);
+
+                    out.println(encryptedAesKey);
+
+                    System.out.println("\n" + in.readLine());
+
+                    out.close();
+                    in.close();
+                    clientSocket.close();
+
+                }else{
+
+                    System.out.println("No Address received");
+                    System.out.println( message);
+                }
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

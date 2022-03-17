@@ -6,11 +6,9 @@ import nodeManager.NodeHandler;
 
 import javax.crypto.SecretKey;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.security.PublicKey;
 import java.util.Base64;
@@ -25,7 +23,7 @@ public class Client {
 
         NodeHandler nodeHandler = new NodeHandler();
 
-        PublicKey[] circuit = nodeHandler.generateCircuit(1);
+        PublicKey[] circuit = nodeHandler.generateCircuit(3);
 
         String message = "hello there";
 
@@ -81,13 +79,14 @@ public class Client {
         String data = message;
 
         for(int i = circuit.length-1; i>0; i--){
+
             SecretKey aesKey = aesEncryption.getAESKey();
 
             String encryptedMessage1 = aesEncryption.encrypt(data, aesKey);
 
             String rsaEncryptedAesKey1 = encryptionService.rsaEncrypt(aesKey.getEncoded(), circuit[i]);
 
-            data =  publicKeyAsString(circuit[i-1]) + rsaEncryptedAesKey1 + encryptedMessage1 ;
+            data =  publicKeyAsString(circuit[i]) + rsaEncryptedAesKey1 + encryptedMessage1 ;
 
         }
 
@@ -97,7 +96,7 @@ public class Client {
 
         onion[0] = aesEncryption.encrypt(data, aesKey);
 
-        onion[1] = encryptionService.rsaEncrypt(aesKey.getEncoded(), circuit[circuit.length-1]);
+        onion[1] = encryptionService.rsaEncrypt(aesKey.getEncoded(), circuit[0]);
 
         return onion;
 

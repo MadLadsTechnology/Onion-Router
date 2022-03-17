@@ -5,14 +5,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.IOException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.ArrayList;
-import java.util.Base64;
+import java.util.*;
+import java.util.function.Predicate;
 
 import static API.APIService.apiGETRequest;
 
@@ -41,17 +40,25 @@ public class NodeHandler {
     }
 
     public PublicKey[] generateCircuit(int amount) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        PublicKey[] circuit = new PublicKey[amount];
+        ArrayList<PublicKey> circuit = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
             byte[] publicBytes = Base64.getDecoder().decode(getRandomNode());
             X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicBytes);
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             PublicKey pubKey = keyFactory.generatePublic(keySpec);
-
-            circuit[i] = pubKey;
+            if(!circuit.contains(pubKey)){
+                circuit.add(pubKey);
+            }else{
+                i--;
+            }
         }
 
-        return circuit;
+        PublicKey[] keys = new PublicKey[circuit.size()];
+
+        for(int i = 0; i<circuit.size(); i++){
+            keys[i] = circuit.get(i);
+        }
+        return keys;
     }
 
     private String getRandomNode(){

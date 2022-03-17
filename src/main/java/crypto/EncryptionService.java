@@ -18,7 +18,8 @@ public class EncryptionService {
         Cipher decryptCipher = Cipher.getInstance("RSA");
         decryptCipher.init(Cipher.DECRYPT_MODE, privateKey);
 
-        return new String(decryptCipher.doFinal(bytes));
+
+        return Base64.getEncoder().encodeToString(decryptCipher.doFinal(bytes));
     }
 
     public String rsaEncrypt(byte[] plainText, PublicKey publicKey)throws Exception {

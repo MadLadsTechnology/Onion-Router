@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 public class FullEncryption {
@@ -23,14 +22,11 @@ public class FullEncryption {
         RSAKeyPairGenerator keyPairGenerator = new RSAKeyPairGenerator();
         EncryptionService encryptionService = new EncryptionService();
 
+        String encryptedAesKey = encryptionService.rsaEncrypt(secretKey.getEncoded(), keyPairGenerator.getPublicKey());
 
-        String keyAsString = Base64.getEncoder().encodeToString(secretKey.getEncoded());
-        String encrypted = encryptionService.rsaEncrypt(keyAsString.getBytes(), keyPairGenerator.getPublicKey());
+        String decryptedAesKey = encryptionService.rsaDecrypt(encryptedAesKey, keyPairGenerator.getPrivateKey());
 
-        String decrypted = encryptionService.rsaDecrypt(encrypted, keyPairGenerator.getPrivateKey());
-
-        Assert.assertEquals(secretKey.getEncoded(), decrypted.getBytes(StandardCharsets.UTF_8));
-        byte[] decodedKey = decrypted.getBytes();
+        byte[] decodedKey = Base64.getDecoder().decode(decryptedAesKey);
 
         // rebuild key using SecretKeySpec
         SecretKey aesKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
