@@ -17,9 +17,7 @@ public class Client {
 
         //TODO: make api call to get a circuit
 
-
-
-        PublicKey[] circuit = ;
+        PublicKey[] circuit = null;
 
         String message = "hello there";
 

@@ -17,8 +17,18 @@ import java.nio.charset.StandardCharsets;
 public class APIService {
 
     public static String apiGETRequest(String url) throws Exception {
-
         URL urlForGetRequest = new URL(url);
+        return getString(urlForGetRequest);
+
+    }
+    public static String apiGETRequestWithPayload(String url, String payload) throws Exception {
+        payload = stringRefactoring(payload);
+        URL urlForGetRequest = new URL(url + "?payload=" + payload);
+        return getString(urlForGetRequest);
+
+    }
+
+    private static String getString(URL urlForGetRequest) throws Exception {
         HttpURLConnection connection = (HttpURLConnection) urlForGetRequest.openConnection();
         connection.setRequestMethod("GET");
         int responseCode = connection.getResponseCode();
@@ -37,7 +47,11 @@ public class APIService {
         } else {
             throw new Exception("Could not connect");
         }
+    }
 
+    private static String stringRefactoring(String payload){
+        payload.replaceAll("\\+", "%2b" );
+        return payload;
     }
 
     public static void apiPOSTNode(String url, String publicKey, String address) throws Exception {
