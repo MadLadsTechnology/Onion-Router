@@ -10,7 +10,6 @@ import java.util.Base64;
 public class AESEncryption {
 
 
-
     public SecretKey getAESKey() throws NoSuchAlgorithmException {
         KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         keyGen.init(256, SecureRandom.getInstanceStrong());

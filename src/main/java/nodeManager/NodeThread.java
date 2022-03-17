@@ -61,6 +61,7 @@ public class NodeThread extends Thread {
 
             String decryptedAESKey = encryptionService.rsaDecrypt(encryptedAESKey, thisNode.getPrivateKey());
 
+
             byte[] decodedKey = decryptedAESKey.getBytes(StandardCharsets.UTF_8);
 
             // rebuild key using SecretKeySpec

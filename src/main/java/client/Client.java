@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.security.PublicKey;
 import java.util.Base64;
@@ -21,8 +22,6 @@ public class Client {
     //Simple client for now
     public static void main(String[] args) throws Exception {
 
-
-        //TODO: make api call to get a circuit
 
         NodeHandler nodeHandler = new NodeHandler();
 
@@ -52,6 +51,7 @@ public class Client {
 
         //sending data
         out.println(onion[0]);
+
 
         //sending aesKey
         out.println(onion[1]);

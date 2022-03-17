@@ -43,7 +43,6 @@ public class APIService {
             }
             in.close();
 
-            System.out.println(response);
             return String.valueOf(response);
 
         } else {
