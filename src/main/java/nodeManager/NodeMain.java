@@ -46,7 +46,7 @@ public class NodeMain {
             }
 
             new Thread(new NodeThread(socket, thisNode)).start();
-            System.out.println("New connection established");
+            System.out.println("New connection started from remote");
         }
 
     }

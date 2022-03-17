@@ -10,8 +10,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.*;
-import java.util.function.Predicate;
+import java.util.ArrayList;
+import java.util.Base64;
 
 import static API.APIService.apiGETRequest;
 
@@ -25,11 +25,19 @@ public class NodeHandler {
         fillNodes();
     }
 
+    /***
+     *
+     * @param publicKeys
+     */
     public NodeHandler(ArrayList<String> publicKeys) {
         JSON_DATA = null;
         this.publicKeys = publicKeys;
     }
 
+    /**
+     *
+     * @throws ParseException
+     */
     private void fillNodes() throws ParseException {
         JSONParser parser = new JSONParser();
         JSONObject jsonObject  = (JSONObject) parser.parse(JSON_DATA);
@@ -39,6 +47,13 @@ public class NodeHandler {
         publicKeyList.forEach( node -> parseNodeObject( (JSONObject) node ));
     }
 
+    /**
+     *
+     * @param amount
+     * @return
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     */
     public PublicKey[] generateCircuit(int amount) throws NoSuchAlgorithmException, InvalidKeySpecException {
         ArrayList<PublicKey> circuit = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
@@ -61,11 +76,19 @@ public class NodeHandler {
         return keys;
     }
 
+    /**
+     *
+     * @return
+     */
     private String getRandomNode(){
         int index = (int)(Math.random() * publicKeys.size());
         return publicKeys.get(index);
     }
 
+    /**
+     *
+     * @param node
+     */
     private void parseNodeObject(JSONObject node)
     {
         //Get node's public key
