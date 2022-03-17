@@ -17,28 +17,25 @@ import static API.APIService.apiGETRequestWithPayload;
 
 
 public class Client {
-    //Simple client for now
+
+
     public static void main(String[] args) throws Exception {
 
-
+        //Generating a node circuit to send encrypted message
         NodeHandler nodeHandler = new NodeHandler();
-
         PublicKey[] circuit = nodeHandler.generateCircuit(3);
 
-        String message = "hello there";
+        String message = "Hello there, you are reading this on the last node!";
 
         String[] onion = layerEncryptMessage(circuit, message);
 
-        System.out.println(publicKeyAsString(circuit[0]));
-
+        //Getting address of first node from the API
         String address = apiGETRequestWithPayload("http://localhost:8080/api/getAddress", publicKeyAsString(circuit[0]));
 
-        System.out.println(address);
-        String ip = address.split(":")[0];
-        int port = Integer.parseInt(address.split(":")[1]);
-        //Make api call to get address of first node
 
         //establishing connection with node
+        String ip = address.split(":")[0];
+        int port = Integer.parseInt(address.split(":")[1]);
         Socket clientSocket = new Socket(ip, port);
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -48,14 +45,8 @@ public class Client {
         }
 
         //sending data
-        out.println(onion[0]);
-
-
-        //sending aesKey
-        out.println(onion[1]);
-
-
-        System.out.println("\n" + in.readLine());
+        out.println(onion[0]); //data
+        out.println(onion[1]); //encrypted AES key
 
         out.close();
         in.close();
@@ -78,14 +69,16 @@ public class Client {
 
         String data = message;
 
-        for(int i = circuit.length-1; i>0; i--){
+        for(int i=1;i < circuit.length; i++){
 
+            //creating AES key and encrypting data with it
             SecretKey aesKey = aesEncryption.getAESKey();
-
             String encryptedMessage1 = aesEncryption.encrypt(data, aesKey);
 
+            //RSA encrypts the AES key
             String rsaEncryptedAesKey1 = encryptionService.rsaEncrypt(aesKey.getEncoded(), circuit[i]);
 
+            //Setting up string to hold data for next layer
             data =  publicKeyAsString(circuit[i]) + rsaEncryptedAesKey1 + encryptedMessage1 ;
 
         }
@@ -102,6 +95,11 @@ public class Client {
 
     }
 
+    /**
+     *
+     * @param key
+     * @return
+     */
     private static String publicKeyAsString(Key key){
         return Base64.getEncoder().encodeToString(key.getEncoded());
     }
