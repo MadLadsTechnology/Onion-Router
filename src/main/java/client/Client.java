@@ -2,7 +2,6 @@ package client;
 
 import crypto.AESEncryption;
 import crypto.EncryptionService;
-import nodeManager.NodeHandler;
 
 import javax.crypto.SecretKey;
 import java.io.BufferedReader;

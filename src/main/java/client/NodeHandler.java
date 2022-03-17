@@ -1,4 +1,4 @@
-package nodeManager;
+package client;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

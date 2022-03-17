@@ -1,5 +1,6 @@
-package nodeManager;
+package node;
 
+import client.NodeHandler;
 import crypto.RSAKeyPairGenerator;
 import org.junit.Test;
 

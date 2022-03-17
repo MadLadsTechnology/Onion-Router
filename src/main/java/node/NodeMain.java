@@ -1,4 +1,4 @@
-package nodeManager;
+package node;
 
 import crypto.RSAKeyPairGenerator;
 
