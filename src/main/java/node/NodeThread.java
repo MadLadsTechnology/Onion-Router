@@ -41,6 +41,7 @@ public class NodeThread extends Thread {
             InputStreamReader inputStream = new InputStreamReader(socket.getInputStream());
             BufferedReader reader = new BufferedReader(inputStream);
             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+            System.out.println("connection from: " + socket.getInetAddress() + ":" + socket.getPort());
 
             //Reading the data from the previous node
             String encryptedData = reader.readLine();
@@ -62,13 +63,11 @@ public class NodeThread extends Thread {
 
             //Decrypting the data with the AES key
             AESEncryption aesEncryption = new AESEncryption();
-
             String decryptedData = aesEncryption.decrypt(encryptedData, aesKey);
 
             if(decryptedData.length() <= 348){
                 System.out.println(decryptedData);
             }else{
-
 
                 //Creating substrings of the decrypted data into their actual forms
                 String[] dataSplit = decryptedData.split(":", 2);
@@ -83,19 +82,18 @@ public class NodeThread extends Thread {
 
                     //creating connection to next node
                     int port = Integer.parseInt(addressPort);
-                    System.out.println(host + "   " + port);
+                    System.out.println("Connecting to next node: " + host + ":" + port);
                     Socket clientSocket = new Socket(host, port);
                     PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
                     BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
                     if (clientSocket.isConnected()){
-                        System.out.println("Connection to next node acquired");
+                        System.out.println("Connection acquired");
 
                         //Sending encrypted data to next node
                         out.println(message);
                         out.println(encryptedAesKey);
                     }
-
 
                    //Closing connection
                     out.close();

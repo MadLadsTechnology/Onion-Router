@@ -30,7 +30,9 @@ public class NodeMain {
         System.out.println("Please specify your wanted port:");
         int PORT = Integer.parseInt(in.nextLine());
 
-        apiPOSTNode("http://localhost:8080/api/putNode", publicKeyAsString, "localhost:" + PORT);
+        int responseCode = apiPOSTNode("http://localhost:8080/api/putNode", publicKeyAsString, "localhost:" + PORT);
+
+        System.out.println("The server responded with:" + responseCode);
 
         boolean running = true;
 
@@ -46,7 +48,6 @@ public class NodeMain {
             }
 
             new Thread(new NodeThread(socket, thisNode)).start();
-            System.out.println("New connection started from remote");
         }
 
     }

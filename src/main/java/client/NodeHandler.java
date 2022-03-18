@@ -81,7 +81,7 @@ public class NodeHandler {
 
     /**
      *
-     * @return arandom node from the publicKeys arrayList
+     * @return random node from the publicKeys arrayList
      */
     private Node getRandomNode(){
         int index = (int)(Math.random() * nodes.size());

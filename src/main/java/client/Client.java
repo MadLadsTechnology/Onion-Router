@@ -36,23 +36,20 @@ public class Client {
 
         String[] onion = layerEncryptMessage(circuit, message);
 
-
         //establishing connection with node
         String host = circuit[0].getHost();
         int port = circuit[0].getPort();
-        System.out.println(host + port);
         Socket clientSocket = new Socket(host, port);
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
         if (clientSocket.isConnected()){
-            System.out.println("Connection Acquired");
+            System.out.println("Connected to: " + host + ":" + port);
         }
 
         //sending data
         out.println(onion[0]); //data
         out.println(onion[1]); //encrypted AES key
-        System.out.println(onion[1]);
 
         out.close();
         in.close();

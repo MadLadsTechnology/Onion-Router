@@ -86,8 +86,9 @@ public class APIService {
      * @param publicKey the publick key of the node
      * @param address the ip and port of the node
      * @throws Exception if the connection cannot be established
+     * @return response code
      */
-    public static void apiPOSTNode(String url, String publicKey, String address) throws Exception {
+    public static int apiPOSTNode(String url, String publicKey, String address) throws Exception {
 
         URL urlPost = new URL(url);
         HttpURLConnection http = (HttpURLConnection) urlPost.openConnection();
@@ -102,8 +103,11 @@ public class APIService {
         OutputStream stream = http.getOutputStream();
         stream.write(out);
 
-        System.out.println(http.getResponseCode() + " " + http.getResponseMessage());
+        int responseCode = http.getResponseCode();
         http.disconnect();
+
+        return responseCode;
+
     }
 
 
