@@ -95,9 +95,8 @@ public class NodeHandler {
     private void parseNodeObject(JSONObject node){
         //Get node's public key
         String publicKey = (String) node.get("publicKey");
-        String host = (String) node.get("host");
-        System.out.println(node.get("port"));
-        int port = Integer.valueOf((long) node.get("port"));;
+        String host = (String) node.get("ip");
+        int port = Integer.parseInt(String.valueOf((long) node.get("port")));;
 
         nodes.add(new Node(publicKey, host, port));
     }

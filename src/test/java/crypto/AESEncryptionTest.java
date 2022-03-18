@@ -3,7 +3,11 @@ package crypto;
 import org.junit.Assert;
 import org.junit.Test;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 
@@ -11,7 +15,7 @@ public class AESEncryptionTest {
 
 
     @Test
-    public void testEncryptDecrypt() throws NoSuchAlgorithmException {
+    public void testEncryptDecrypt() throws NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
         AESEncryption aesEncryption = new AESEncryption();
 
         SecretKey secretKey = aesEncryption.getAESKey();

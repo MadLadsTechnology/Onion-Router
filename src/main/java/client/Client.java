@@ -30,7 +30,7 @@ public class Client {
 
         //Generating a node circuit to send encrypted message
         NodeHandler nodeHandler = new NodeHandler();
-        Node[] circuit = nodeHandler.generateCircuit(5);
+        Node[] circuit = nodeHandler.generateCircuit(3);
 
         String message = "Hello there, you are reading this on the last node!";
 
@@ -40,6 +40,7 @@ public class Client {
         //establishing connection with node
         String host = circuit[0].getHost();
         int port = circuit[0].getPort();
+        System.out.println(host + port);
         Socket clientSocket = new Socket(host, port);
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -51,6 +52,7 @@ public class Client {
         //sending data
         out.println(onion[0]); //data
         out.println(onion[1]); //encrypted AES key
+        System.out.println(onion[1]);
 
         out.close();
         in.close();
@@ -79,6 +81,7 @@ public class Client {
 
             //creating AES key and encrypting data with it
             SecretKey aesKey = aesEncryption.getAESKey();
+
             String encryptedMessage1 = aesEncryption.encrypt(data, aesKey);
 
             //RSA encrypts the AES key
@@ -86,6 +89,7 @@ public class Client {
 
             //Setting up string to hold data for next layer
             data =  circuit[i].getHost() + ":"  + circuit[i].getPort() + rsaEncryptedAesKey1 + encryptedMessage1 ;
+
         }
 
         String[] onion = new String[2];

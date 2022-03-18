@@ -37,8 +37,6 @@ public class NodeThread extends Thread {
     @Override
     public void run() {
         try {
-            System.out.println("running");
-
             //Settig up readers and reads message from other
             InputStreamReader inputStream = new InputStreamReader(socket.getInputStream());
             BufferedReader reader = new BufferedReader(inputStream);
@@ -64,25 +62,28 @@ public class NodeThread extends Thread {
 
             //Decrypting the data with the AES key
             AESEncryption aesEncryption = new AESEncryption();
+
             String decryptedData = aesEncryption.decrypt(encryptedData, aesKey);
 
-
-            if(decryptedData.length() <= 736){
+            if(decryptedData.length() <= 348){
                 System.out.println(decryptedData);
             }else{
 
-                //Creating substrings of the decrypted data into their actual forms
-                String[] dataSplit = decryptedData.split(":", 3);
 
-                String host = dataSplit[0] +":"+ dataSplit[1];
-                String addressPort = dataSplit[2].substring(0, 3);
-                String encryptedAesKey = dataSplit[2].substring(4,348);
-                String message = decryptedData.substring(348);
+                //Creating substrings of the decrypted data into their actual forms
+                String[] dataSplit = decryptedData.split(":", 2);
+
+
+                String host = dataSplit[0];
+                String addressPort = dataSplit[1].substring(0, 4);
+                String encryptedAesKey = dataSplit[1].substring(4,348);
+                String message = dataSplit[1].substring(348);
 
                 if(!host.equals(":")){ //if address is found
 
                     //creating connection to next node
                     int port = Integer.parseInt(addressPort);
+                    System.out.println(host + "   " + port);
                     Socket clientSocket = new Socket(host, port);
                     PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
                     BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
