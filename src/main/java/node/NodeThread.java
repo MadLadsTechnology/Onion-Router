@@ -72,20 +72,18 @@ public class NodeThread extends Thread {
             }else{
 
                 //Creating substrings of the decrypted data into their actual forms
-                String publicKey = decryptedData.substring(0,392);
-                String encryptedAesKey = decryptedData.substring(392,736);
-                String message = decryptedData.substring(736);
+                String[] dataSplit = decryptedData.split(":", 2);
 
+                String host = dataSplit[0];
+                String addressPort = dataSplit[1].substring(0, 3);
+                String encryptedAesKey = dataSplit[1].substring(4,348);
+                String message = decryptedData.substring(348);
 
-                //Requesting the address of the next node, based on the public key in the decrypted data
-                String address = apiGETRequestWithPayload("http://localhost:8080/api/getAddress", publicKey);
-
-                if(!address.equals("")){ //if address is found
+                if(!host.equals("")){ //if address is found
 
                     //creating connection to next node
-                    String ip = address.split(":")[0];
-                    int port = Integer.parseInt(address.split(":")[1]);
-                    Socket clientSocket = new Socket(ip, port);
+                    int port = Integer.parseInt(addressPort);
+                    Socket clientSocket = new Socket(host, port);
                     PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
                     BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
