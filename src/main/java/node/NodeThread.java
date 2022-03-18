@@ -72,14 +72,14 @@ public class NodeThread extends Thread {
             }else{
 
                 //Creating substrings of the decrypted data into their actual forms
-                String[] dataSplit = decryptedData.split(":", 2);
+                String[] dataSplit = decryptedData.split(":", 3);
 
-                String host = dataSplit[0];
-                String addressPort = dataSplit[1].substring(0, 3);
-                String encryptedAesKey = dataSplit[1].substring(4,348);
+                String host = dataSplit[0] +":"+ dataSplit[1];
+                String addressPort = dataSplit[2].substring(0, 3);
+                String encryptedAesKey = dataSplit[2].substring(4,348);
                 String message = decryptedData.substring(348);
 
-                if(!host.equals("")){ //if address is found
+                if(!host.equals(":")){ //if address is found
 
                     //creating connection to next node
                     int port = Integer.parseInt(addressPort);
