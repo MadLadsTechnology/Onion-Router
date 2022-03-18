@@ -1,6 +1,7 @@
 package API;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -110,6 +111,19 @@ public class APIService {
 
     }
 
+    public static void apiDELETENode(String url, String address) throws IOException {
+        URL urlPost = new URL(url);
+        HttpURLConnection http = (HttpURLConnection) urlPost.openConnection();
+        http.setRequestMethod("DELETE");
+        http.setDoOutput(true);
+        http.setRequestProperty("Content-Type", "application/json");
 
+        String data = "{\"address\":\"" + address + "\"}";
 
+        byte[] out = data.getBytes(StandardCharsets.UTF_8);
+        OutputStream stream = http.getOutputStream();
+        stream.write(out);
+        System.out.println(http.getResponseCode() + " " + http.getResponseMessage());
+        http.disconnect();
+    }
 }

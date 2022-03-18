@@ -9,6 +9,7 @@ import java.util.Base64;
 import java.util.Scanner;
 
 import static API.APIService.apiPOSTNode;
+import static API.APIService.apiDELETENode;
 
 /**
  * Class to start run an instance of a node
@@ -36,6 +37,16 @@ public class NodeMain {
 
         boolean running = true;
 
+        Thread thread = new Thread(() -> {
+            try {
+                apiDELETENode("http://localhost:8080/api/deleteNode", publicKeyAsString);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        Runtime.getRuntime().addShutdownHook(thread);
+
         ServerSocket serverSocket = new ServerSocket(PORT);
         while(running){
             Socket socket;
@@ -49,6 +60,5 @@ public class NodeMain {
 
             new Thread(new NodeThread(socket, thisNode)).start();
         }
-
     }
 }
