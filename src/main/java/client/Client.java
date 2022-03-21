@@ -2,15 +2,21 @@ package client;
 
 import crypto.AESEncryption;
 import crypto.EncryptionService;
+import crypto.RSAKeyPairGenerator;
 import node.Node;
 
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.security.Key;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
 import static API.APIService.apiGETRequestWithPayload;
@@ -32,9 +38,40 @@ public class Client {
         NodeHandler nodeHandler = new NodeHandler();
         Node[] circuit = nodeHandler.generateCircuit(3);
 
+        EncryptionService encryptionService = new EncryptionService();
+
+        RSAKeyPairGenerator rsaKeyPairGenerator = new RSAKeyPairGenerator();
+
+
+        for (int i = 0; i < circuit.length; i++) {
+            String host = circuit[i].getHost();
+            int port = circuit[i].getPort();
+            Socket clientSocket = new Socket(host, port);
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+            if (clientSocket.isConnected()){
+                System.out.println("Connected to: " + host + ":" + port);
+            }
+
+            out.println("key"); //type of connection
+            out.println(keyAsString(rsaKeyPairGenerator.getPublicKey())); //Sending public key
+
+            String encryptedAESKey = in.readLine();
+
+            String decryptedAESKey = encryptionService.rsaDecrypt(encryptedAESKey, rsaKeyPairGenerator.getPrivateKey());
+            byte[] byteKey = Base64.getDecoder().decode(decryptedAESKey);
+
+            circuit[i].setAesKey(new SecretKeySpec(byteKey, 0, byteKey.length, "AES")) ; //getting the aes key of the node
+
+            out.close();
+            in.close();
+            clientSocket.close();
+        }
+
         String message = "Hello there, you are reading this on the last node!";
 
-        String[] onion = layerEncryptMessage(circuit, message);
+        String packet = layerEncryptMessage(circuit, message);
 
         //establishing connection with node
         String host = circuit[0].getHost();
@@ -48,8 +85,8 @@ public class Client {
         }
 
         //sending data
-        out.println(onion[0]); //data
-        out.println(onion[1]); //encrypted AES key
+        out.println("not a key");
+        out.println(packet); //data
 
         out.close();
         in.close();
@@ -67,9 +104,8 @@ public class Client {
      * @throws Exception
      */
 
-    private static String[] layerEncryptMessage(Node[] circuit, String message) throws Exception {
+    private static String layerEncryptMessage(Node[] circuit, String message) throws Exception {
 
-        EncryptionService encryptionService = new EncryptionService();
         AESEncryption aesEncryption = new AESEncryption();
 
         String data = message;
@@ -77,28 +113,13 @@ public class Client {
         for(int i=1;i < circuit.length; i++){
 
             //creating AES key and encrypting data with it
-            SecretKey aesKey = aesEncryption.getAESKey();
-
-            String encryptedMessage1 = aesEncryption.encrypt(data, aesKey);
-
-            //RSA encrypts the AES key
-            String rsaEncryptedAesKey1 = encryptionService.rsaEncrypt(aesKey.getEncoded(), circuit[i].getPublicKey());
+            String encryptedMessage1 = aesEncryption.encrypt(data, circuit[i].getAesKey());
 
             //Setting up string to hold data for next layer
-            data =  circuit[i].getHost() + ":"  + circuit[i].getPort() + rsaEncryptedAesKey1 + encryptedMessage1 ;
-
+            data =  circuit[i].getHost() + ":"  + circuit[i].getPort() + encryptedMessage1 ;
         }
 
-        String[] onion = new String[2];
-
-        SecretKey aesKey = aesEncryption.getAESKey();
-
-        onion[0] = aesEncryption.encrypt(data, aesKey);
-
-        onion[1] = encryptionService.rsaEncrypt(aesKey.getEncoded(), circuit[0].getPublicKey());
-
-        return onion;
-
+        return aesEncryption.encrypt(data, circuit[0].getAesKey());
     }
 
     /**
@@ -108,7 +129,8 @@ public class Client {
      * @param key the key object you want as a string
      * @return the given key as a string
      */
-    private static String publicKeyAsString(Key key){
+    private static String keyAsString(Key key){
         return Base64.getEncoder().encodeToString(key.getEncoded());
     }
+
 }

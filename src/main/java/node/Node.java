@@ -35,6 +35,10 @@ public class Node {
          this.host = host;
          this.port = port;
     }
+    public Node( String host, int port){
+        this.host = host;
+        this.port = port;
+    }
     public Node(String publicKeyAsString, String host, int port) {
         this.publicKey = publicKeyFromString(publicKeyAsString);
         this.host = host;

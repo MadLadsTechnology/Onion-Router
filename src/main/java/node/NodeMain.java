@@ -27,7 +27,6 @@ public class NodeMain {
         SecretKey aesKey = aesEncryption.getAESKey();
         //RSAKeyPairGenerator keyGen = new RSAKeyPairGenerator();
 
-
         //String publicKeyAsString = Base64.getEncoder().encodeToString(thisNode.publicKey.getEncoded());
 
         Scanner in = new Scanner(System.in);
