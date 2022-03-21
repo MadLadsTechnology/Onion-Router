@@ -7,7 +7,6 @@ import java.security.NoSuchAlgorithmException;
 
 class AESEncryptionTest {
 
-
     @org.junit.jupiter.api.Test
     public void testEncryptDecrypt() throws NoSuchAlgorithmException{
         AESEncryption aesEncryption = new AESEncryption();
