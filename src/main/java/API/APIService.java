@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
@@ -60,7 +59,7 @@ public class APIService {
      *
      * @param url the target url
      * @param address the ip and port of the node
-     * @throws Exception if the connection cannot be established
+     * @throws IOException if the connection cannot be established
      * @return response code from server
      */
 
