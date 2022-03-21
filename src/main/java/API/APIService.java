@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
@@ -14,29 +15,17 @@ import java.nio.charset.StandardCharsets;
 public class APIService {
 
     /**
-     * Make an empty get request
-     * @param url url to the wanted target
-     * @return the response from the target
+     * Method to make GET request
+     * @param url url to the wanted host
+     * @return the response from the host
      * @throws Exception if a connection could not be established
      */
     public static String apiGETRequest(String url) throws Exception {
         URL urlForGetRequest = new URL(url);
-        return getString(urlForGetRequest);
-    }
-
-    /**
-     * Method to make a http get request
-     *
-     * @param urlForGetRequest the url to the api ypu want to make a get request to
-     * @return returns teh response from the given url
-     * @throws Exception thrown if a connection could not be established
-     */
-    private static String getString(URL urlForGetRequest) throws Exception {
         HttpURLConnection connection = (HttpURLConnection) urlForGetRequest.openConnection();
         connection.setRequestMethod("GET");
-        int responseCode = connection.getResponseCode();
 
-        if (responseCode == HttpURLConnection.HTTP_OK) {
+        if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder response = new StringBuilder();
             String readLine;
@@ -58,44 +47,44 @@ public class APIService {
      * @param url the target url
      * @param address the ip and port of the node
      * @throws Exception if the connection cannot be established
-     * @return response code
+     * @return response code from server
      */
     public static int apiPOSTNode(String url,  String address) throws Exception {
-
-        URL urlPost = new URL(url);
-        HttpURLConnection http = (HttpURLConnection) urlPost.openConnection();
-        http.setRequestMethod("POST");
-        http.setDoOutput(true);
-        http.setRequestProperty("Content-Type", "application/json");
-
-        String data = "{  \"address\":\"" + address + "\"}";
-
-        byte[] out = data.getBytes(StandardCharsets.UTF_8);
-
-        OutputStream stream = http.getOutputStream();
-        stream.write(out);
-
-        int responseCode = http.getResponseCode();
-        http.disconnect();
-
-        return responseCode;
+        HttpURLConnection http = (HttpURLConnection) new URL(url).openConnection();
+        return nodeAction(http, "POST", address);
 
     }
 
-    public static void apiDELETENode(String url, String address) throws IOException {
-        URL urlPost = new URL(url);
-        HttpURLConnection http = (HttpURLConnection) urlPost.openConnection();
-        http.setRequestMethod("DELETE");
+    /**
+     * Specific post method to publish a node to the OnionRouterServer
+     *
+     * @param url the target url
+     * @param address the ip and port of the node
+     * @throws Exception if the connection cannot be established
+     * @return response code from server
+     */
+
+    public static int apiDELETENode(String url, String address) throws IOException {
+        HttpURLConnection http = (HttpURLConnection) new URL(url).openConnection();
+        return nodeAction(http, "DELETE", address);
+
+    }
+
+    private static int nodeAction(HttpURLConnection http, String action, String nodeAddress) throws IOException {
+
+        http.setRequestMethod(action);
         http.setDoOutput(true);
         http.setRequestProperty("Content-Type", "application/json");
 
-        String data = "{  \"address\":\"" + address + "\"}";
+        String data = "{  \"address\":\"" + nodeAddress + "\"}";
 
         byte[] out = data.getBytes(StandardCharsets.UTF_8);
-        System.out.println(address);
         OutputStream stream = http.getOutputStream();
         stream.write(out);
-        System.out.println(http.getResponseCode() + " " + http.getResponseMessage());
+        int responseCode = http.getResponseCode();
+
         http.disconnect();
+
+        return responseCode;
     }
 }
