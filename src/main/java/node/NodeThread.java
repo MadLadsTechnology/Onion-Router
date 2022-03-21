@@ -8,9 +8,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.security.PublicKey;
+import java.util.Base64;
 
 import static API.APIService.apiGETRequest;
-
 
 /**
  * Class to handle the node logic.
@@ -60,23 +60,22 @@ public class NodeThread extends Thread {
             else{
                 String encryptedData = firstReader.readLine();
 
-                //closing connection
-
-
-
                 //Decrypting the data with the AES key
                 AESEncryption aesEncryption = new AESEncryption();
-                System.out.println("received: " + encryptedData);
+
                 String decryptedData = aesEncryption.decrypt(encryptedData, thisNode.getAesKey());
 
                 if(!decryptedData.contains("localhost")){
-                    firstWriter.println(apiGETRequest(decryptedData));
-                    System.out.println(decryptedData);
+                    String response = apiGETRequest(decryptedData);
+
+                    System.out.println("encrypted with: " + Base64.getEncoder().encodeToString(thisNode.getAesKey().getEncoded()));
+                    String encryptedResponse = aesEncryption.encrypt(response, thisNode.getAesKey());
+
+                    firstWriter.println(encryptedResponse);
                 }else{
 
                     //Creating substrings of the decrypted data into their actual forms
                     String[] dataSplit = decryptedData.split(":", 2);
-
 
                     String host = dataSplit[0];
                     String addressPort = dataSplit[1].substring(0, 4);
@@ -92,15 +91,15 @@ public class NodeThread extends Thread {
                         BufferedReader secondReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
                         if (clientSocket.isConnected()){
-                            System.out.println("Connection acquired");
-
-                            System.out.println("sent: " + data);
                             //Sending encrypted data to next node
                             secondWriter.println("not a key");
                             secondWriter.println(data);
                         }
 
-                        firstWriter.println(secondReader.readLine());
+                        String response = secondReader.readLine();
+                        String encryptedResponse = aesEncryption.encrypt(response, thisNode.getAesKey());
+                        System.out.println("encrypted with: " + Base64.getEncoder().encodeToString(thisNode.getAesKey().getEncoded()));
+                        firstWriter.println(encryptedResponse);
 
                         //Closing connection
                         secondWriter.close();

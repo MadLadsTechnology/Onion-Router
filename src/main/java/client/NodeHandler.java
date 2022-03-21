@@ -14,7 +14,7 @@ import static API.APIService.apiGETRequest;
 
 public class NodeHandler {
     private final String JSON_DATA;
-    private ArrayList<Node> nodes;
+    private final ArrayList<Node> nodes;
 
     /**
      * Connects to the nodeServerApi and fetches all active nodes in the network
@@ -25,17 +25,6 @@ public class NodeHandler {
         nodes = new ArrayList<>();
         fillNodes();
     }
-
-    /**
-     *
-     * @param nodes
-     */
-    public NodeHandler(ArrayList<Node> nodes) {
-        JSON_DATA = null;
-        this.nodes = nodes;
-    }
-
-
     /**
      *
      * Fills the arrayList with PublicKeys with the data from the JSON data

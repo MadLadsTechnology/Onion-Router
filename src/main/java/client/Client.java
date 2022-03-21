@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.security.Key;
 import java.util.Base64;
+import java.util.List;
 
 
 /**
@@ -80,12 +81,15 @@ public class Client {
         out.println("not a key");
         out.println(packet); //data
 
-        System.out.println(in.readLine());
+        //receiving and printing response
+
+        String encryptedResponse = in.readLine();
+
+        System.out.println(decryptOnion(circuit, encryptedResponse));
 
         out.close();
         in.close();
         clientSocket.close();
-
     }
 
     /**
@@ -104,7 +108,7 @@ public class Client {
 
         String data = message;
 
-        for(int i=1;i < circuit.length; i++){
+        for(int i=circuit.length-1;i > 0; i--){
 
             //creating AES key and encrypting data with it
             String encryptedMessage1 = aesEncryption.encrypt(data, circuit[i].getAesKey());
@@ -125,6 +129,18 @@ public class Client {
      */
     private static String keyAsString(Key key){
         return Base64.getEncoder().encodeToString(key.getEncoded());
+    }
+
+    private static String decryptOnion(Node[] circuit, String string){
+
+        AESEncryption aesEncryption = new AESEncryption();
+        for(int i = 0; i< circuit.length; i++){
+            System.out.println(keyAsString(circuit[i].getAesKey()));
+            string = aesEncryption.decrypt(string, circuit[i].getAesKey());
+        }
+
+        return string;
+
     }
 
 }
