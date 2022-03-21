@@ -24,13 +24,14 @@ public class NodeMain {
         AESEncryption aesEncryption = new AESEncryption();
         SecretKey aesKey = aesEncryption.getAESKey();
         //RSAKeyPairGenerator keyGen = new RSAKeyPairGenerator();
-        Node thisNode = new Node(aesKey);
 
         //String publicKeyAsString = Base64.getEncoder().encodeToString(thisNode.publicKey.getEncoded());
 
         Scanner in = new Scanner(System.in);
         System.out.println("Please specify your wanted port:");
         int PORT = Integer.parseInt(in.nextLine());
+
+        Node thisNode = new Node(aesKey, "localhost", PORT);
 
         int responseCode = apiPOSTNode("http://localhost:8080/api/putNode", "localhost:" + PORT);
 

@@ -31,10 +31,10 @@ public class Client {
         Node[] circuit = nodeHandler.generateCircuit(3);
 
         EncryptionService encryptionService = new EncryptionService();
-
+        //Generating an RSA key-pair for the client
         RSAKeyPairGenerator rsaKeyPairGenerator = new RSAKeyPairGenerator();
 
-
+        //Creating a circuit of nodes and collecting their AES-keys using RSA
         for (int i = 0; i < circuit.length; i++) {
             String host = circuit[i].getHost();
             int port = circuit[i].getPort();
@@ -49,10 +49,10 @@ public class Client {
             out.println("key"); //type of connection
             out.println(keyAsString(rsaKeyPairGenerator.getPublicKey())); //Sending public key
 
-            String encryptedAESKey = in.readLine();
+            String encryptedAESKey = in.readLine(); //Reading encrypted AES key
 
             String decryptedAESKey = encryptionService.rsaDecrypt(encryptedAESKey, rsaKeyPairGenerator.getPrivateKey());
-            byte[] byteKey = Base64.getDecoder().decode(decryptedAESKey);
+            byte[] byteKey = Base64.getDecoder().decode(decryptedAESKey); //converting the aes key to bytes
 
             circuit[i].setAesKey(new SecretKeySpec(byteKey, 0, byteKey.length, "AES")) ; //getting the aes key of the node
 
@@ -61,11 +61,11 @@ public class Client {
             clientSocket.close();
         }
 
-        String message = "https://insult.mattbas.org/api/insult";
+        String message = "https://insult.mattbas.org/api/insult"; //API call we want to do
 
         String packet = layerEncryptMessage(circuit, message);
 
-        //establishing connection with node
+        //Establishing connection with node
         String host = circuit[0].getHost();
         int port = circuit[0].getPort();
         Socket clientSocket = new Socket(host, port);
@@ -90,9 +90,9 @@ public class Client {
 
     /**
      *
-     * Takes a message and encrypts it to be sent through a circuit of nodes in the node network
+     * Takes a message and encrypts it in layers to be sent through a circuit of nodes in the node network
      *
-     * @param circuit array of publickeys the message will travel thru
+     * @param circuit array of nodes the message will travel through
      * @param message the message to be delivered to the endpoint
      * @return a multiencrypted message containing public keys
      * @throws Exception
