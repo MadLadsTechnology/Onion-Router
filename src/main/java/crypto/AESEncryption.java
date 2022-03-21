@@ -31,7 +31,6 @@ public class AESEncryption {
     }
 
 
-
     /**
      * Encrypts a string using AES encryption
      * @param string The string

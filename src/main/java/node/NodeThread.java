@@ -58,6 +58,7 @@ public class NodeThread extends Thread {
                 firstInputStream.close();
             }
             else{
+
                 String encryptedData = firstReader.readLine();
 
                 //Decrypting the data with the AES key
