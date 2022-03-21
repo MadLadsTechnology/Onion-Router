@@ -117,9 +117,10 @@ public class APIService {
         http.setDoOutput(true);
         http.setRequestProperty("Content-Type", "application/json");
 
-        String data = "{\"address\":\"" + address + "\"}";
+        String data = "{  \"address\":\"" + address + "\"}";
 
         byte[] out = data.getBytes(StandardCharsets.UTF_8);
+        System.out.println(address);
         OutputStream stream = http.getOutputStream();
         stream.write(out);
         System.out.println(http.getResponseCode() + " " + http.getResponseMessage());
