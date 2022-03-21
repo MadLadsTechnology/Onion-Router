@@ -67,10 +67,9 @@ public class Client {
      * @param circuit array of nodes the message will travel through
      * @param message the message to be delivered to the endpoint
      * @return a multiencrypted message containing public keys
-     * @throws Exception
      */
 
-    private static String layerEncryptMessage(Node[] circuit, String message) throws Exception {
+    private static String layerEncryptMessage(Node[] circuit, String message) {
 
         AESEncryption aesEncryption = new AESEncryption();
         String data = message;
