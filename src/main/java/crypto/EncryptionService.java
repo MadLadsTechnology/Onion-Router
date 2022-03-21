@@ -31,7 +31,6 @@ public class EncryptionService {
         Cipher decryptCipher = Cipher.getInstance("RSA");
         decryptCipher.init(Cipher.DECRYPT_MODE, privateKey);
 
-
         return Base64.getEncoder().encodeToString(decryptCipher.doFinal(bytes));
     }
 

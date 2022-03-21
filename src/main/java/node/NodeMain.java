@@ -1,17 +1,15 @@
 package node;
 
 import crypto.AESEncryption;
-import crypto.RSAKeyPairGenerator;
 
 import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Base64;
 import java.util.Scanner;
 
-import static API.APIService.apiPOSTNode;
 import static API.APIService.apiDELETENode;
+import static API.APIService.apiPOSTNode;
 
 /**
  * Class to start run an instance of a node
