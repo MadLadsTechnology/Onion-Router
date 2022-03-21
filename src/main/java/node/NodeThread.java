@@ -64,25 +64,19 @@ public class NodeThread extends Thread {
             }
             else{
                 String encryptedData = reader.readLine();
-                String encryptedAESKey = reader.readLine();
 
                 //closing connection
                 reader.close();
                 writer.close();
                 inputStream.close();
 
-                //Decrypting the AES key needed to decrypt the data.
-                String decryptedAESKey = encryptionService.rsaDecrypt(encryptedAESKey, thisNode.getPrivateKey());
-
-                //Rebuilding the AES key from the string
-                byte[] decodedKey = Base64.getDecoder().decode(decryptedAESKey);
-                SecretKey aesKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
 
                 //Decrypting the data with the AES key
                 AESEncryption aesEncryption = new AESEncryption();
-                String decryptedData = aesEncryption.decrypt(encryptedData, aesKey);
+                System.out.println("received: " + encryptedData);
+                String decryptedData = aesEncryption.decrypt(encryptedData, thisNode.getAesKey());
 
-                if(decryptedData.length() <= 348){
+                if(!decryptedData.contains("localhost")){
                     System.out.println(decryptedData);
                 }else{
 
@@ -106,7 +100,9 @@ public class NodeThread extends Thread {
                         if (clientSocket.isConnected()){
                             System.out.println("Connection acquired");
 
+                            System.out.println("sent: " + data);
                             //Sending encrypted data to next node
+                            out.println("not a key");
                             out.println(data);
                         }
 

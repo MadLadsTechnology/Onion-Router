@@ -25,6 +25,7 @@ public class EncryptionService {
      * @throws BadPaddingException
      */
     public String rsaDecrypt(String encryptedMessage, PrivateKey privateKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+
         byte[] bytes = Base64.getDecoder().decode(encryptedMessage);
 
         Cipher decryptCipher = Cipher.getInstance("RSA");

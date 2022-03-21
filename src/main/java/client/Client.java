@@ -6,6 +6,7 @@ import crypto.RSAKeyPairGenerator;
 import node.Node;
 
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -43,8 +44,8 @@ public class Client {
 
 
         for (int i = 0; i < circuit.length; i++) {
-            String host = circuit[0].getHost();
-            int port = circuit[0].getPort();
+            String host = circuit[i].getHost();
+            int port = circuit[i].getPort();
             Socket clientSocket = new Socket(host, port);
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -59,8 +60,9 @@ public class Client {
             String encryptedAESKey = in.readLine();
 
             String decryptedAESKey = encryptionService.rsaDecrypt(encryptedAESKey, rsaKeyPairGenerator.getPrivateKey());
+            byte[] byteKey = Base64.getDecoder().decode(decryptedAESKey);
 
-            circuit[i].setAesKey((SecretKey) encryptionService.keyFromString(decryptedAESKey, "AES")) ; //getting the aes key of the node
+            circuit[i].setAesKey(new SecretKeySpec(byteKey, 0, byteKey.length, "AES")) ; //getting the aes key of the node
 
             out.close();
             in.close();
@@ -83,6 +85,7 @@ public class Client {
         }
 
         //sending data
+        out.println("not a key");
         out.println(packet); //data
 
         out.close();
@@ -130,10 +133,4 @@ public class Client {
         return Base64.getEncoder().encodeToString(key.getEncoded());
     }
 
-    private static Key keyFromString(String key) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        byte[] publicBytes = Base64.getDecoder().decode(key);
-        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicBytes);
-        KeyFactory keyFactory = KeyFactory.getInstance("AES");
-        return keyFactory.generatePublic(keySpec);
-    }
 }
