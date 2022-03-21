@@ -28,45 +28,14 @@ public class Client {
     public static void main(String[] args) throws Exception {
 
         //Generating a node circuit to send encrypted message
-        NodeHandler nodeHandler = new NodeHandler();
-        Node[] circuit = nodeHandler.generateCircuit(3);
-
-        EncryptionService encryptionService = new EncryptionService();
-        //Generating an RSA key-pair for the client
-        RSAKeyPairGenerator rsaKeyPairGenerator = new RSAKeyPairGenerator();
-
-        //Creating a circuit of nodes and collecting their AES-keys using RSA
-        for (int i = 0; i < circuit.length; i++) {
-            String host = circuit[i].getHost();
-            int port = circuit[i].getPort();
-            Socket clientSocket = new Socket(host, port);
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
-            if (clientSocket.isConnected()){
-                System.out.println("Connected to: " + host + ":" + port);
-            }
-
-            out.println("key"); //type of connection
-            out.println(keyAsString(rsaKeyPairGenerator.getPublicKey())); //Sending public key
-
-            String encryptedAESKey = in.readLine(); //Reading encrypted AES key
-
-            String decryptedAESKey = encryptionService.rsaDecrypt(encryptedAESKey, rsaKeyPairGenerator.getPrivateKey());
-            byte[] byteKey = Base64.getDecoder().decode(decryptedAESKey); //converting the aes key to bytes
-
-            circuit[i].setAesKey(new SecretKeySpec(byteKey, 0, byteKey.length, "AES")) ; //getting the aes key of the node
-
-            out.close();
-            in.close();
-            clientSocket.close();
-        }
+        NodeHandler nodeHandler = new NodeHandler(3);
+        Node[] circuit = nodeHandler.getCircuit();
 
         String message = "https://insult.mattbas.org/api/insult"; //API call we want to do
 
-        String packet = layerEncryptMessage(circuit, message);
+        String encryptedRequest = layerEncryptMessage(circuit, message);
 
-        //Establishing connection with node
+        //Establishing connection with first node
         String host = circuit[0].getHost();
         int port = circuit[0].getPort();
         Socket clientSocket = new Socket(host, port);
@@ -79,13 +48,12 @@ public class Client {
 
         //sending data
         out.println("not a key");
-        out.println(packet); //data
+        out.println(encryptedRequest); //data
 
         //receiving and printing response
-
         String encryptedResponse = in.readLine();
 
-        System.out.println(decryptOnion(circuit, encryptedResponse));
+        System.out.println(layerDecryptMessage(circuit, encryptedResponse));
 
         out.close();
         in.close();
@@ -105,9 +73,7 @@ public class Client {
     private static String layerEncryptMessage(Node[] circuit, String message) throws Exception {
 
         AESEncryption aesEncryption = new AESEncryption();
-
         String data = message;
-
         for(int i=circuit.length-1;i > 0; i--){
 
             //creating AES key and encrypting data with it
@@ -120,22 +86,10 @@ public class Client {
         return aesEncryption.encrypt(data, circuit[0].getAesKey());
     }
 
-    /**
-     *
-     * Method to get the string value of publicKey object
-     *
-     * @param key the key object you want as a string
-     * @return the given key as a string
-     */
-    private static String keyAsString(Key key){
-        return Base64.getEncoder().encodeToString(key.getEncoded());
-    }
-
-    private static String decryptOnion(Node[] circuit, String string){
+    private static String layerDecryptMessage(Node[] circuit, String string){
 
         AESEncryption aesEncryption = new AESEncryption();
         for(int i = 0; i< circuit.length; i++){
-            System.out.println(keyAsString(circuit[i].getAesKey()));
             string = aesEncryption.decrypt(string, circuit[i].getAesKey());
         }
 

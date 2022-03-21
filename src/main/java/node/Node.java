@@ -33,18 +33,6 @@ public class Node {
         this.port = port;
     }
 
-    private PublicKey publicKeyFromString(String stringKey)  {
-         try {
-             byte[] publicBytes = Base64.getDecoder().decode(stringKey);
-             X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicBytes);
-             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-             return keyFactory.generatePublic(keySpec);
-         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-             e.printStackTrace();
-             return null;
-         }
-    }
-
     public SecretKey getAesKey() {
         return aesKey;
     }

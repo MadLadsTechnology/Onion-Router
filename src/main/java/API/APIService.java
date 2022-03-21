@@ -22,22 +22,6 @@ public class APIService {
     public static String apiGETRequest(String url) throws Exception {
         URL urlForGetRequest = new URL(url);
         return getString(urlForGetRequest);
-
-    }
-
-    /**
-     * Specific method to do a get request with one param named payload
-     *
-     * @param url target url
-     * @param payload the value payload
-     * @return the response from the target
-     * @throws Exception if the connection cannot be established
-     */
-    public static String apiGETRequestWithPayload(String url, String payload) throws Exception {
-        payload = stringRefactoring(payload);
-        URL urlForGetRequest = new URL(url + "?payload=" + payload);
-        return getString(urlForGetRequest);
-
     }
 
     /**
@@ -66,18 +50,6 @@ public class APIService {
         } else {
             throw new Exception("Could not connect");
         }
-    }
-
-    /**
-     * Method to make a string url compatible
-     *
-     * @param payload the string to be refactored
-     * @return the new refactored string
-     */
-    private static String stringRefactoring(String payload){
-        payload = payload.replaceAll("\\+", "%2b" );
-        payload = payload.replaceAll("\\\\", "%5c" );
-        return payload;
     }
 
     /**
