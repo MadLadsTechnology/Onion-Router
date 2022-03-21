@@ -84,12 +84,11 @@ public class APIService {
      * Specific post method to publish a node to the OnionRouterServer
      *
      * @param url the target url
-     * @param publicKey the publick key of the node
      * @param address the ip and port of the node
      * @throws Exception if the connection cannot be established
      * @return response code
      */
-    public static int apiPOSTNode(String url, String publicKey, String address) throws Exception {
+    public static int apiPOSTNode(String url,  String address) throws Exception {
 
         URL urlPost = new URL(url);
         HttpURLConnection http = (HttpURLConnection) urlPost.openConnection();
@@ -97,7 +96,7 @@ public class APIService {
         http.setDoOutput(true);
         http.setRequestProperty("Content-Type", "application/json");
 
-        String data = "{ \"publicKey\":\""  + publicKey +"\", \"address\":\"" + address + "\"}";
+        String data = "{  \"address\":\"" + address + "\"}";
 
         byte[] out = data.getBytes(StandardCharsets.UTF_8);
 

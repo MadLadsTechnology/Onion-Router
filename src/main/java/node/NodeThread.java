@@ -41,7 +41,7 @@ public class NodeThread extends Thread {
     public void run() {
         EncryptionService encryptionService = new EncryptionService();
         try {
-            //Settig up readers and reads message from other
+            //Setting up readers and reads message from other
             InputStreamReader inputStream = new InputStreamReader(socket.getInputStream());
             BufferedReader reader = new BufferedReader(inputStream);
             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
@@ -49,18 +49,18 @@ public class NodeThread extends Thread {
 
             //Reading the data from the previous node
             String typeOfMessage = reader.readLine();
-            String publicKey;
-            PublicKey pubKey = null;
+
             if (typeOfMessage.equals("key")){
-                publicKey = reader.readLine();
-                byte[] publicBytes = Base64.getDecoder().decode(publicKey);
-                X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicBytes);
-                KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-                pubKey = keyFactory.generatePublic(keySpec);
-                String aesKeyEncoded = "";
-                aesKeyEncoded= encryptionService.rsaEncrypt(this.thisNode.getAesKey().getEncoded(), pubKey);
-                writer = new PrintWriter(socket.getOutputStream(), true);
+                String publicKey = reader.readLine();
+                PublicKey pubKey = (PublicKey) encryptionService.keyFromString(publicKey, "RSA");
+
+                String aesKeyEncoded = encryptionService.rsaEncrypt(this.thisNode.getAesKey().getEncoded(), pubKey);
+
                 writer.println(aesKeyEncoded);
+
+                reader.close();
+                writer.close();
+                inputStream.close();
             }
             else{
                 String encryptedData = reader.readLine();
@@ -68,6 +68,7 @@ public class NodeThread extends Thread {
 
                 //closing connection
                 reader.close();
+                writer.close();
                 inputStream.close();
 
                 //Decrypting the AES key needed to decrypt the data.
@@ -91,8 +92,7 @@ public class NodeThread extends Thread {
 
                     String host = dataSplit[0];
                     String addressPort = dataSplit[1].substring(0, 4);
-                    String encryptedAesKey = dataSplit[1].substring(4,348);
-                    String message = dataSplit[1].substring(348);
+                    String data = dataSplit[1].substring(4);
 
                     if(!host.equals(":")){ //if address is found
 
@@ -107,8 +107,7 @@ public class NodeThread extends Thread {
                             System.out.println("Connection acquired");
 
                             //Sending encrypted data to next node
-                            out.println(message);
-                            out.println(encryptedAesKey);
+                            out.println(data);
                         }
 
                         //Closing connection
@@ -117,7 +116,7 @@ public class NodeThread extends Thread {
                         clientSocket.close();
 
                     }else{
-                        System.out.println( message);
+                        System.out.println( data);
                     }
                 }
 

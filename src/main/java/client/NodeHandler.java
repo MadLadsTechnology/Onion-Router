@@ -39,6 +39,7 @@ public class NodeHandler {
         this.nodes = nodes;
     }
 
+
     /**
      *
      * Fills the arrayList with PublicKeys with the data from the JSON data

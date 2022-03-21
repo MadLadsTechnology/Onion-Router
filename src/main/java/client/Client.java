@@ -41,6 +41,7 @@ public class Client {
 
         RSAKeyPairGenerator rsaKeyPairGenerator = new RSAKeyPairGenerator();
 
+
         for (int i = 0; i < circuit.length; i++) {
             String host = circuit[0].getHost();
             int port = circuit[0].getPort();
@@ -59,7 +60,7 @@ public class Client {
 
             String decryptedAESKey = encryptionService.rsaDecrypt(encryptedAESKey, rsaKeyPairGenerator.getPrivateKey());
 
-            circuit[i].setAesKey((SecretKey) keyFromString(decryptedAESKey)) ; //getting the aes key of the node
+            circuit[i].setAesKey((SecretKey) encryptionService.keyFromString(decryptedAESKey, "AES")) ; //getting the aes key of the node
 
             out.close();
             in.close();
@@ -116,7 +117,6 @@ public class Client {
         }
 
         return aesEncryption.encrypt(data, circuit[0].getAesKey());
-
     }
 
     /**
