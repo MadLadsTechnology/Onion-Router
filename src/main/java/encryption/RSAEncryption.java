@@ -1,4 +1,4 @@
-package crypto;
+package encryption;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -9,8 +9,27 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
-public class EncryptionService {
+public class RSAEncryption {
 
+    private final PrivateKey privateKey;
+    private final PublicKey publicKey;
+
+    public RSAEncryption() throws NoSuchAlgorithmException {
+        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
+        keyGen.initialize(2048);
+        KeyPair pair = keyGen.generateKeyPair();
+        this.privateKey = pair.getPrivate();
+        this.publicKey = pair.getPublic();
+
+    }
+
+    public PrivateKey getPrivateKey() {
+        return privateKey;
+    }
+
+    public PublicKey getPublicKey() {
+        return publicKey;
+    }
     /**
      *
      * Decrypts a message with the RSA encryption algorithm
@@ -52,11 +71,10 @@ public class EncryptionService {
         return Base64.getEncoder().encodeToString(cipherText);
     }
 
-    public Key keyFromString(String key, String algorithm) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public Key keyFromString(String key) throws NoSuchAlgorithmException, InvalidKeySpecException {
         byte[] publicBytes = Base64.getDecoder().decode(key);
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicBytes);
-        KeyFactory keyFactory = KeyFactory.getInstance(algorithm);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         return keyFactory.generatePublic(keySpec);
     }
-
 }
