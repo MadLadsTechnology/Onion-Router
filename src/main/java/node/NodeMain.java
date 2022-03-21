@@ -1,7 +1,9 @@
 package node;
 
+import crypto.AESEncryption;
 import crypto.RSAKeyPairGenerator;
 
+import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -22,10 +24,13 @@ public class NodeMain {
 
     public static void main(String[] args) throws Exception {
 
-        RSAKeyPairGenerator keyGen = new RSAKeyPairGenerator();
-        Node thisNode = new Node(keyGen.getPrivateKey(), keyGen.getPublicKey());
+        //RSAKeyPairGenerator keyGen = new RSAKeyPairGenerator();
+        //Node thisNode = new Node(keyGen.getPrivateKey(), keyGen.getPublicKey());
 
-        String publicKeyAsString = Base64.getEncoder().encodeToString(thisNode.publicKey.getEncoded());
+        AESEncryption aesEncryption = new AESEncryption();
+        SecretKey aesKey = aesEncryption.getAESKey();
+
+        //String publicKeyAsString = Base64.getEncoder().encodeToString(thisNode.publicKey.getEncoded());
 
         Scanner in = new Scanner(System.in);
         System.out.println("Please specify your wanted port:");
