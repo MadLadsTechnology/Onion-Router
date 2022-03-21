@@ -1,4 +1,4 @@
-package crypto;
+package encryption;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -16,7 +16,6 @@ import java.util.Base64;
  */
 
 public class AESEncryption {
-
 
     /**
      * Generates a random AES key
