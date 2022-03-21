@@ -1,4 +1,4 @@
-package node;
+package model;
 
 
 import javax.crypto.SecretKey;
@@ -18,10 +18,6 @@ public class Node {
     private SecretKey aesKey;
     private String host;
     private int port;
-
-    public Node(SecretKey aesKey){
-        this.aesKey = aesKey;
-    }
 
     public Node( String host, int port){
         this.host = host;
@@ -57,4 +53,12 @@ public class Node {
         this.port = port;
     }
 
+    @Override
+    public String toString() {
+        return "Node{" +
+                "aesKey=" + aesKey +
+                ", host='" + host + '\'' +
+                ", port=" + port +
+                '}';
+    }
 }
