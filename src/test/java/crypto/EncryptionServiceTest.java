@@ -1,7 +1,5 @@
 package crypto;
 
-import org.junit.jupiter.api.Assertions;
-
 class EncryptionServiceTest {
 /*
     @org.junit.jupiter.api.Test

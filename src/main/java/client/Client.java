@@ -1,18 +1,12 @@
 package client;
 
 import crypto.AESEncryption;
-import crypto.EncryptionService;
-import crypto.RSAKeyPairGenerator;
 import node.Node;
 
-import javax.crypto.spec.SecretKeySpec;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.security.Key;
-import java.util.Base64;
-import java.util.List;
 
 
 /**
