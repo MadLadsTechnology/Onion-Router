@@ -20,6 +20,7 @@ import static API.APIService.apiGETRequest;
  */
 public class Client {
 
+
     public static void main(String[] args) throws Exception {
 
         //Generating a node circuit to send encrypted message

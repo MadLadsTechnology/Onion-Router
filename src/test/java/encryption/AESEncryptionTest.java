@@ -1,21 +1,15 @@
 package encryption;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
-import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
+class AESEncryptionTest {
 
-public class AESEncryptionTest {
 
-
-    @Test
-    public void testEncryptDecrypt() throws NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
+    @org.junit.jupiter.api.Test
+    public void testEncryptDecrypt() throws NoSuchAlgorithmException{
         AESEncryption aesEncryption = new AESEncryption();
 
         SecretKey secretKey = aesEncryption.getAESKey();
@@ -26,8 +20,8 @@ public class AESEncryptionTest {
 
         String decryptedMessage = aesEncryption.decrypt(encryptedMessage, secretKey);
 
-        Assert.assertNotEquals(message, encryptedMessage);
-        Assert.assertEquals(message, decryptedMessage);
+        Assertions.assertNotEquals(message, encryptedMessage);
+        Assertions.assertEquals(message, decryptedMessage);
 
     }
 
