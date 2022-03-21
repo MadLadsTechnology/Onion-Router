@@ -1,15 +1,14 @@
 package crypto;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 
-public class FullEncryption {
+class FullEncryptionTest {
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void testRsaEncryptAndDecrypt() throws Exception {
         AESEncryption aesEncryption = new AESEncryption();
 
@@ -33,8 +32,8 @@ public class FullEncryption {
 
         String finalMessage = aesEncryption.decrypt(encryptedMessage, aesKey);
 
-        Assert.assertEquals(secretKey, aesKey);
-        Assert.assertEquals(message, finalMessage);
+        Assertions.assertEquals(secretKey, aesKey);
+        Assertions.assertEquals(message, finalMessage);
     }
 }
 

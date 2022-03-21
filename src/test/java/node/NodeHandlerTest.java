@@ -10,9 +10,9 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Base64;
 
-public class NodeHandlerTest {
-    @Test
-    public void testGenerateCircuit() throws NoSuchAlgorithmException, InvalidKeySpecException {
+class NodeHandlerTest {
+    @org.junit.jupiter.api.Test
+    public void testGenerateCircuit()  {
        /* ArrayList<String> keys = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             RSAKeyPairGenerator keyPairGenerator = new RSAKeyPairGenerator();
