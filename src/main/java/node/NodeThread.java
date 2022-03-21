@@ -3,18 +3,13 @@ package node;
 import crypto.AESEncryption;
 import crypto.EncryptionService;
 
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.security.KeyFactory;
 import java.security.PublicKey;
-import java.security.spec.X509EncodedKeySpec;
-import java.util.Base64;
 
-import static API.APIService.apiGETRequestWithPayload;
+import static API.APIService.apiGETRequest;
 
 
 /**
@@ -42,33 +37,31 @@ public class NodeThread extends Thread {
         EncryptionService encryptionService = new EncryptionService();
         try {
             //Setting up readers and reads message from other
-            InputStreamReader inputStream = new InputStreamReader(socket.getInputStream());
-            BufferedReader reader = new BufferedReader(inputStream);
-            PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+            InputStreamReader firstInputStream = new InputStreamReader(socket.getInputStream());
+            BufferedReader firstReader = new BufferedReader(firstInputStream);
+            PrintWriter firstWriter = new PrintWriter(socket.getOutputStream(), true);
             System.out.println("connection from: " + socket.getInetAddress() + ":" + socket.getPort());
 
             //Reading the data from the previous node
-            String typeOfMessage = reader.readLine();
+            String typeOfMessage = firstReader.readLine();
 
             if (typeOfMessage.equals("key")){
-                String publicKey = reader.readLine();
+                String publicKey = firstReader.readLine();
                 PublicKey pubKey = (PublicKey) encryptionService.keyFromString(publicKey, "RSA");
 
                 String aesKeyEncoded = encryptionService.rsaEncrypt(this.thisNode.getAesKey().getEncoded(), pubKey);
 
-                writer.println(aesKeyEncoded);
+                firstWriter.println(aesKeyEncoded);
 
-                reader.close();
-                writer.close();
-                inputStream.close();
+                firstReader.close();
+                firstWriter.close();
+                firstInputStream.close();
             }
             else{
-                String encryptedData = reader.readLine();
+                String encryptedData = firstReader.readLine();
 
                 //closing connection
-                reader.close();
-                writer.close();
-                inputStream.close();
+
 
 
                 //Decrypting the data with the AES key
@@ -77,6 +70,7 @@ public class NodeThread extends Thread {
                 String decryptedData = aesEncryption.decrypt(encryptedData, thisNode.getAesKey());
 
                 if(!decryptedData.contains("localhost")){
+                    firstWriter.println(apiGETRequest(decryptedData));
                     System.out.println(decryptedData);
                 }else{
 
@@ -94,22 +88,28 @@ public class NodeThread extends Thread {
                         int port = Integer.parseInt(addressPort);
                         System.out.println("Connecting to next node: " + host + ":" + port);
                         Socket clientSocket = new Socket(host, port);
-                        PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-                        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                        PrintWriter secondWriter = new PrintWriter(clientSocket.getOutputStream(), true);
+                        BufferedReader secondReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
                         if (clientSocket.isConnected()){
                             System.out.println("Connection acquired");
 
                             System.out.println("sent: " + data);
                             //Sending encrypted data to next node
-                            out.println("not a key");
-                            out.println(data);
+                            secondWriter.println("not a key");
+                            secondWriter.println(data);
                         }
 
+                        firstWriter.println(secondReader.readLine());
+
                         //Closing connection
-                        out.close();
-                        in.close();
+                        secondWriter.close();
+                        secondReader.close();
                         clientSocket.close();
+
+                        firstReader.close();
+                        firstWriter.close();
+                        firstInputStream.close();
 
                     }else{
                         System.out.println( data);

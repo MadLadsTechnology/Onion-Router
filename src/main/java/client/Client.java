@@ -5,21 +5,13 @@ import crypto.EncryptionService;
 import crypto.RSAKeyPairGenerator;
 import node.Node;
 
-import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.security.Key;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
-
-import static API.APIService.apiGETRequestWithPayload;
 
 
 /**
@@ -69,7 +61,7 @@ public class Client {
             clientSocket.close();
         }
 
-        String message = "Hello there, you are reading this on the last node!";
+        String message = "https://insult.mattbas.org/api/insult";
 
         String packet = layerEncryptMessage(circuit, message);
 
@@ -87,6 +79,8 @@ public class Client {
         //sending data
         out.println("not a key");
         out.println(packet); //data
+
+        System.out.println(in.readLine());
 
         out.close();
         in.close();
