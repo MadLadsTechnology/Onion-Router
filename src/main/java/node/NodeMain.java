@@ -1,7 +1,9 @@
 package node;
 
+import crypto.AESEncryption;
 import crypto.RSAKeyPairGenerator;
 
+import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -21,17 +23,19 @@ public class NodeMain {
 
 
     public static void main(String[] args) throws Exception {
+        AESEncryption aesEncryption = new AESEncryption();
+        SecretKey aesKey = aesEncryption.getAESKey();
+        //RSAKeyPairGenerator keyGen = new RSAKeyPairGenerator();
+        Node thisNode = new Node(aesKey);
 
-        RSAKeyPairGenerator keyGen = new RSAKeyPairGenerator();
-        Node thisNode = new Node(keyGen.getPrivateKey(), keyGen.getPublicKey());
 
-        String publicKeyAsString = Base64.getEncoder().encodeToString(thisNode.publicKey.getEncoded());
+        //String publicKeyAsString = Base64.getEncoder().encodeToString(thisNode.publicKey.getEncoded());
 
         Scanner in = new Scanner(System.in);
         System.out.println("Please specify your wanted port:");
         int PORT = Integer.parseInt(in.nextLine());
 
-        int responseCode = apiPOSTNode("http://localhost:8080/api/putNode", publicKeyAsString, "localhost:" + PORT);
+        int responseCode = apiPOSTNode("http://localhost:8080/api/putNode", "localhost:" + PORT);
 
         System.out.println("The server responded with:" + responseCode);
 
@@ -39,7 +43,7 @@ public class NodeMain {
 
         Thread thread = new Thread(() -> {
             try {
-                apiDELETENode("http://localhost:8080/api/deleteNode", publicKeyAsString);
+                apiDELETENode("http://localhost:8080/api/deleteNode", "localhost:" + PORT);
             } catch (IOException e) {
                 e.printStackTrace();
             }
