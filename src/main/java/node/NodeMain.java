@@ -23,12 +23,11 @@ public class NodeMain {
 
 
     public static void main(String[] args) throws Exception {
-
-        //RSAKeyPairGenerator keyGen = new RSAKeyPairGenerator();
-        //Node thisNode = new Node(keyGen.getPrivateKey(), keyGen.getPublicKey());
-
         AESEncryption aesEncryption = new AESEncryption();
         SecretKey aesKey = aesEncryption.getAESKey();
+        //RSAKeyPairGenerator keyGen = new RSAKeyPairGenerator();
+        Node thisNode = new Node(aesKey);
+
 
         //String publicKeyAsString = Base64.getEncoder().encodeToString(thisNode.publicKey.getEncoded());
 
