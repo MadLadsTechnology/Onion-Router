@@ -1,12 +1,14 @@
 package node;
 
-import crypto.AESEncryption;
-import crypto.EncryptionService;
+import encryption.AESEncryption;
+import encryption.RSAEncryption;
+import model.Node;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.util.Base64;
 
@@ -34,7 +36,12 @@ public class NodeThread extends Thread {
      */
     @Override
     public void run() {
-        EncryptionService encryptionService = new EncryptionService();
+        RSAEncryption rsaEncryption = null;
+        try {
+            rsaEncryption = new RSAEncryption();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         try {
             //Setting up readers and reads message from other
             InputStreamReader firstInputStream = new InputStreamReader(socket.getInputStream());
@@ -47,9 +54,9 @@ public class NodeThread extends Thread {
 
             if (typeOfMessage.equals("key")){
                 String publicKey = firstReader.readLine();
-                PublicKey pubKey = (PublicKey) encryptionService.keyFromString(publicKey, "RSA");
+                PublicKey pubKey = (PublicKey) rsaEncryption.keyFromString(publicKey);
 
-                String aesKeyEncoded = encryptionService.rsaEncrypt(this.thisNode.getAesKey().getEncoded(), pubKey);
+                String aesKeyEncoded = rsaEncryption.rsaEncrypt(this.thisNode.getAesKey().getEncoded(), pubKey);
 
                 firstWriter.println(aesKeyEncoded);
 
@@ -63,7 +70,6 @@ public class NodeThread extends Thread {
 
                 //Decrypting the data with the AES key
                 AESEncryption aesEncryption = new AESEncryption();
-
                 String decryptedData = aesEncryption.decrypt(encryptedData, thisNode.getAesKey());
 
                 if(!decryptedData.contains("localhost")){
@@ -79,13 +85,12 @@ public class NodeThread extends Thread {
                     String[] dataSplit = decryptedData.split(":", 2);
 
                     String host = dataSplit[0];
-                    String addressPort = dataSplit[1].substring(0, 4);
+                    int port = Integer.parseInt(dataSplit[1].substring(0, 4));
                     String data = dataSplit[1].substring(4);
 
                     if(!host.equals(":")){ //if address is found
 
                         //creating connection to next node
-                        int port = Integer.parseInt(addressPort);
                         System.out.println("Connecting to next node: " + host + ":" + port);
                         Socket clientSocket = new Socket(host, port);
                         PrintWriter secondWriter = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -99,10 +104,10 @@ public class NodeThread extends Thread {
 
                         String response = secondReader.readLine();
                         String encryptedResponse = aesEncryption.encrypt(response, thisNode.getAesKey());
-                        System.out.println("encrypted with: " + Base64.getEncoder().encodeToString(thisNode.getAesKey().getEncoded()));
+
                         firstWriter.println(encryptedResponse);
 
-                        //Closing connection
+                        //Closing connections
                         secondWriter.close();
                         secondReader.close();
                         clientSocket.close();
@@ -112,7 +117,7 @@ public class NodeThread extends Thread {
                         firstInputStream.close();
 
                     }else{
-                        System.out.println( data);
+                        System.out.println(data);
                     }
                 }
 
