@@ -27,6 +27,11 @@ public class Node {
         this.host = host;
         this.port = port;
     }
+    public Node(SecretKey aesKey, String host, int port){
+        this.aesKey = aesKey;
+        this.host = host;
+        this.port = port;
+    }
 
     private PublicKey publicKeyFromString(String stringKey)  {
          try {
