@@ -1,18 +1,14 @@
 package client;
 
-import crypto.AESEncryption;
-import crypto.EncryptionService;
-import crypto.RSAKeyPairGenerator;
-import node.Node;
+import encryption.AESEncryption;
+import model.Node;
 
-import javax.crypto.spec.SecretKeySpec;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.security.Key;
-import java.util.Base64;
-import java.util.List;
+
+import static API.APIService.apiGETRequest;
 
 
 /**
@@ -24,14 +20,13 @@ import java.util.List;
  */
 public class Client {
 
-
     public static void main(String[] args) throws Exception {
 
         //Generating a node circuit to send encrypted message
-        NodeHandler nodeHandler = new NodeHandler(3);
-        Node[] circuit = nodeHandler.getCircuit();
+        NodePool nodePool = new NodePool(apiGETRequest("http://localhost:8080/api/getAllNodes"));
+        Node[] circuit = nodePool.generateCircuit(3);
 
-        String message = "https://insult.mattbas.org/api/insult"; //API call we want to do
+        String message = "https://insult.mattbas.org/api/insult"; //API we want to call
 
         String encryptedRequest = layerEncryptMessage(circuit, message);
 
@@ -44,16 +39,15 @@ public class Client {
 
         if (clientSocket.isConnected()){
             System.out.println("Connected to: " + host + ":" + port);
+
+            //sending data
+            out.println("not a key");
+            out.println(encryptedRequest); //data
+            //receiving and printing response
+            String encryptedResponse = in.readLine();
+
+            System.out.println(layerDecryptMessage(circuit, encryptedResponse));
         }
-
-        //sending data
-        out.println("not a key");
-        out.println(encryptedRequest); //data
-
-        //receiving and printing response
-        String encryptedResponse = in.readLine();
-
-        System.out.println(layerDecryptMessage(circuit, encryptedResponse));
 
         out.close();
         in.close();
@@ -66,7 +60,7 @@ public class Client {
      *
      * @param circuit array of nodes the message will travel through
      * @param message the message to be delivered to the endpoint
-     * @return a multiencrypted message containing public keys
+     * @return a multi-encrypted message containing public keys
      */
 
     private static String layerEncryptMessage(Node[] circuit, String message) {
