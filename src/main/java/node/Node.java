@@ -1,6 +1,7 @@
 package node;
 
 
+import javax.crypto.SecretKey;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -16,15 +17,24 @@ public class Node {
     
     private PrivateKey privateKey;
     public PublicKey publicKey;
-    private String publicKeyAsString;
+    private SecretKey aesKey;
     private String host;
     private int port;
 
-     public Node(PublicKey publicKey, String host, int port){
+    public Node(SecretKey aesKey, String host, int port){
+        this.aesKey = aesKey;
+        this.host = host;
+        this.port = port;
+    }
+    public Node(SecretKey aesKey){
+        this.aesKey = aesKey;
+    }
+
+    public Node(PublicKey publicKey, String host, int port){
          this.publicKey = publicKey;
          this.host = host;
          this.port = port;
-     }
+    }
     public Node(String publicKeyAsString, String host, int port) {
         this.publicKey = publicKeyFromString(publicKeyAsString);
         this.host = host;
@@ -49,6 +59,14 @@ public class Node {
              e.printStackTrace();
              return null;
          }
+    }
+
+    public SecretKey getAesKey() {
+        return aesKey;
+    }
+
+    public void setAesKey(SecretKey aesKey) {
+        this.aesKey = aesKey;
     }
 
     public String getHost() {
