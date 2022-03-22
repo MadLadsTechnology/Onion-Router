@@ -74,6 +74,6 @@ Løsningen vår har en klient samt et nettverk av noder som er holdt styr på me
 
 [Node](https://drive.google.com/file/d/1SF11X4rKvyfakynLaX-m0tSH-ZNS7VSY/view?usp=sharing)
 
-[Klient](https://drive.google.com/file/d/1ra5Kxe1bR9RbT4D2TnwZ3wDKiVPwFYFA/view?usp=sharing)
+[Klient](https://drive.google.com/file/d/1tqarrQyy7yyWcVXYYkOiFAsx7fQ9QQo7/view?usp=sharing)
 
 ## Laget av:
