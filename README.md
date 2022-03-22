@@ -18,7 +18,7 @@ Løsningen vår har en klient samt et nettverk av noder som er holdt styr på me
 
 ##### Slik ser vår implementasjon ut(med bilder😎):
 
-1️⃣ Noder sender til serveren at de er aktive. Dersom de blir avslått blir de også fjernet fra serveren 
+1️⃣ Noder sender til serveren at de er aktive. Dersom de blir avslått, blir de også fjernet fra serveren 
 
  <img src="https://user-images.githubusercontent.com/70323886/159466951-373fc490-d940-4092-9fbd-faab83ef55ab.PNG" width="400" />
 
@@ -46,7 +46,7 @@ Løsningen vår har en klient samt et nettverk av noder som er holdt styr på me
 - RSA kryptering for henting av AES nøkler fra noder
 - API-kall fra siste node
 - Responsen blir kryptert lagvis på vei tilbake, og dekrypteres av klienten.
-- Ruten er generert tilfeldig fra et gitt antall noder fra poolen.
+- Ruten er tilfeldig generert fra et gitt antall noder fra poolen.
   - Ruten er aldri sendt ut fra klienten
   - Nodene kan kun lese neste punkt i ruten, og vet forrige punkt. 
 
@@ -65,7 +65,7 @@ Løsningen vår har en klient samt et nettverk av noder som er holdt styr på me
 - JSON-Simple
   - Brukes til å formatere json både hos klienten og rest-serveren.
 - SpringBoot
-  - Vi bruker en springboot rest server for å lagre alle nodene vi har tilgjengelige. Her kan vi hente ut alle aktive noder, samt registrere og slette individuelle noder. 
+  - Vi bruker en springboot rest server for å lagre alle nodene vi har tilgjengelige. Her kan vi hente ut alle aktive noder, samt registrere og slette individuelle noder.
 
 
 
@@ -77,7 +77,7 @@ For å kjøre tjenesten kreves det:
 
 ✅ At Backendserveren kjører og at port 8080 er ledig
 
-✅ Hvertfall 3 nodes som kjører og er koblet opp til serveren
+✅ I hvert fall 3 nodes som kjører og er koblet opp til serveren
 
 ✅ En tilgjengelig rest api som returnerer en streng,json,xml
 
@@ -87,7 +87,7 @@ Dersom du vil hoste en egen server last ned Onion-Router-Server.jar
 
 ⬇️ [Server](https://drive.google.com/file/d/11oPSGgrD7euX7Gd3Vi7d7JOvaoXATFlu/view?usp=sharing)
 
-Dertter er det bare å kjøre kommanoen under i samme katalog som filen
+Deretter er det bare å kjøre kommandoen under i samme katalog som filen
 
 ```
 java -jar Onion-Server.jar
