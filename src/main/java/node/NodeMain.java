@@ -39,6 +39,15 @@ public class NodeMain {
         int responseCode = apiPOSTNode("http://" + serverAddress  + ":8080/api/putNode", address +":" + PORT);
         System.out.println("The server responded with:" + responseCode);
 
+        Thread thread = new Thread (() -> {
+            System.out.println("Type q to close the node");
+            String closeInput = in.nextLine();
+            if(closeInput.equals("q")){
+                System.exit(0);
+            }
+        });
+        thread.start();
+
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
                 apiDELETENode("http://"+serverAddress+":8080/api/deleteNode", address +":" + PORT);
