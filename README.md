@@ -16,7 +16,7 @@ Løsningen vår har en klient samt et nettverk av noder som er holdt styr på me
 
 - Klienten kan sende inn en url som viser til en API og motta et svar i form av en string.
 
-##### Slik ser vår implementasjon ut(med bilder🥵):
+##### Slik ser vår implementasjon ut(med bilder😎):
 
 1️⃣ Noder sender til serveren at de er aktive. Dersom de blir avslått blir de også fjernet fra serveren 
 
