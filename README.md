@@ -85,7 +85,7 @@ For å kjøre tjenesten kreves det:
 
 Dersom du vil hoste en egen server last ned Onion-Router-Server.jar
 
-⬇️ [Server](https://drive.google.com/file/d/116hS8y7WpOhWEDqePNOG5uFgznEOkx0x/view?usp=sharing)
+⬇️ [Server](https://drive.google.com/file/d/1FXLCOb9Vdzf4xF8mfLyq80TeLM46ZDdw/view?usp=sharing)
 
 Deretter er det bare å kjøre kommandoen under i samme katalog som filen
 
