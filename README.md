@@ -69,7 +69,7 @@ Løsningen vår har en klient samt et nettverk av noder som er holdt styr på me
 
 
 
-## Installasjon:
+## 💾 Installasjon:
 
 For å kjøre tjenesten kreves det:
 At Backendserveren kjører og at port 8080 er ledig
@@ -77,7 +77,7 @@ Hvertfall 3 nodes som kjører og er koblet opp til serveren
 En tilgjengelig rest api som returnerer en streng,json,xml
 Disse instruksjonene vil gi deg en fungerende tjeneste på et lokalt nettverk
 
-### Server:
+### 📡 Server:
 
 Dersom du vil hoste en egen server last ned Onion-Router-Server.jar
 
@@ -92,7 +92,7 @@ java -jar Onion-Server.jar
 Dette vil starte en Spring Boot server som kjører på port 8080
 Dersom du ønsker at denne skal være tilgjengelig for andre utenfor ditt lokale nettverk blir du nødt til å portforwarde [Link til hjelp](https://portforward.com/)
 
-### Noder:
+### 📠 Noder:
 
 For å kjøre din egen node må du først laste ned jar filen:
 
@@ -107,7 +107,7 @@ java -jar Onion-Router-Node.jar
 Etter at du har kjørt denne kommandoen må du spesifisere hvilken port du ønsker at noden skal kjøre på. Det er da lurt å velge porter som ikke er låste eller brukes av andre tjenester
 Du blir deretter nødt til å spesifisere ip adressen på Serveren over, dersom du kjører begge på lokal maskin blir det da localhost. Etter dette vil noden koble seg til og printe ut 200:ok hvis alt stemte.
 
-### Klient:
+### 💻 Klient:
 
 Som tidligere er du nødt til å laste ned klienten
 
@@ -128,14 +128,12 @@ https://api.kanye.rest
 ```
 
 
-## Kjøring av tester
+## 🪤 Kjøring av tester
 
-## Nedlastninger:
+## 📦 Nedlastninger:
 
 [Server](https://drive.google.com/file/d/11oPSGgrD7euX7Gd3Vi7d7JOvaoXATFlu/view?usp=sharing)
 
 [Node](https://drive.google.com/file/d/1SF11X4rKvyfakynLaX-m0tSH-ZNS7VSY/view?usp=sharing)
 
 [Klient](https://drive.google.com/file/d/1tqarrQyy7yyWcVXYYkOiFAsx7fQ9QQo7/view?usp=sharing)
-
-## Laget av:
