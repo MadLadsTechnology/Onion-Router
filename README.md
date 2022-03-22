@@ -125,12 +125,18 @@ java -jar Onion-Router-Client.jar
 
 Denne kommandoen vil starte opp en klient som du kan benytte for å koble deg til Onion nettverket. Etter at du skrevet kommandoen må du oppgi ip adressen til serveren (localhost hvis den kjører på den samme maskinen) Deretter må du skrive inn en api som du kan hente informasjon fra. 
 
-Noen gode APIer:
+### Noen gode APIer:
 
+Her er noen APIer som vi synes er morsomme
+
+#### Kanye West quote generator:
 ```
 https://api.kanye.rest
 ```
-
+#### Insult generator:
+```
+https://evilinsult.com/generate_insult.php?lang=en&amp;type=json
+```
 
 ## 🪤 Kjøring av tester
 
