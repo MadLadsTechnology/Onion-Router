@@ -25,15 +25,18 @@ public class Client {
     public static void main(String[] args) throws Exception {
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please specify the port you want to host the node from:");
+        System.out.println("Please specify the address of the nodeServer:");
         String serverAddress = scanner.nextLine();
+
+        System.out.println("Please specify the address of the api you want to fetch from:");
+        String apiAddress = scanner.nextLine();
 
 
         //Generating a node circuit to send encrypted message
         NodePool nodePool = new NodePool(apiGETRequest("http://" + serverAddress +":8080/api/getAllNodes"));
         Node[] circuit = nodePool.generateCircuit(3);
 
-        String message = "lastNode-https://insult.mattbas.org/api/insult"; //API we want to call
+        String message = "lastNode-" + apiAddress; //API we want to call
 
         String encryptedRequest = layerEncryptMessage(circuit, message);
 
