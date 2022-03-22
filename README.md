@@ -4,10 +4,10 @@ Last build: ![example workflow](https://github.com/MadLadsTechnology/Onion-Route
 
 Dette er et frivillig prosjekt tatt for å forbedre karakteren vår i emnet IDATT2104 - Nettverksprogrammering.
 
-## 📜Oppgaven:
+## 📜 Oppgaven:
 "Implementer onion routing enten som programvare eller programvarebibliotek i et valgfritt programmeringsspråk"
 
-### 💻Vår løsning
+### 💻 Vår løsning
 
 - Utviklet i  Java☕️.
 
@@ -33,7 +33,7 @@ Løsningen vår har en klient samt et nettverk av noder som er holdt styr på me
 5️⃣ For å sende svaret tilbake brukes samme rute. Hver av nodene legger nå på et lag kryptering med sin symmetriske nøkkel. Når svaret så ankommer klienten kan den dekryptere alle lagene og lese meldingen.
 <img src="https://user-images.githubusercontent.com/70323886/159466970-fc407c1e-92e2-4028-8a9f-5f655eb62a9a.PNG" width="400" />
 
-### 🧰Implementert funksjonalitet:
+### 🧰 Implementert funksjonalitet:
 - Sende og motta meldinger som blir kryptert i et nettverk av noder
 - AES kryptere meldinger
 - En restServer for å holde oversikt over aktive noder
@@ -46,13 +46,13 @@ Løsningen vår har en klient samt et nettverk av noder som er holdt styr på me
   - Nodene kan kun lese neste punkt i ruten, og vet forrige punkt. 
 
 
-### 🔜Svakheter og mulige utvidelser:
+### 🔜 Svakheter og mulige utvidelser:
 - Kun enkle API kall som returnerer en String
 - Dårlig feilhåndtering
 - Ingen brukergrensesnitt
 - Ingen proxy funksjonalitet
 
-### ☁️Eksterne Avhengigheter
+### ☁️ Eksterne Avhengigheter
 - Maven
   - Importere JUnit og JSON-Simple
 - JUnit
