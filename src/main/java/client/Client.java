@@ -83,7 +83,7 @@ public class Client {
             String encryptedMessage1 = aesEncryption.encrypt(data, circuit[i].getAesKey());
 
             //Setting up string to hold data for next layer
-            data =  circuit[i].getHost() + ":"  + circuit[i].getPort() + encryptedMessage1 ;
+            data =  circuit[i].getHost() + ":"  + circuit[i].getPort() +":"+ encryptedMessage1 ;
         }
 
         return aesEncryption.encrypt(data, circuit[0].getAesKey());
