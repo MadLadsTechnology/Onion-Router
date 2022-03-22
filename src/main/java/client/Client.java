@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
 
 import static API.APIService.apiGETRequest;
 
@@ -23,8 +24,13 @@ public class Client {
 
     public static void main(String[] args) throws Exception {
 
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please specify the port you want to host the node from:");
+        String serverAddress = scanner.nextLine();
+
+
         //Generating a node circuit to send encrypted message
-        NodePool nodePool = new NodePool(apiGETRequest("http://localhost:8080/api/getAllNodes"));
+        NodePool nodePool = new NodePool(apiGETRequest("http:// "+ serverAddress +" :8080/api/getAllNodes"));
         Node[] circuit = nodePool.generateCircuit(3);
 
         String message = "https://insult.mattbas.org/api/insult"; //API we want to call

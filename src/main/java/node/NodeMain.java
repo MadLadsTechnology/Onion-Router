@@ -5,6 +5,7 @@ import model.Node;
 
 import javax.crypto.SecretKey;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
@@ -26,17 +27,21 @@ public class NodeMain {
         SecretKey aesKey = aesEncryption.getAESKey();
 
         Scanner in = new Scanner(System.in);
-        System.out.println("Please specify your wanted port:");
+        System.out.println("Please specify the port you want to host the node from:");
         int PORT = Integer.parseInt(in.nextLine());
+        System.out.println("Please specify the address of the server:");
+        String serverAddress = in.nextLine();
 
-        Node thisNode = new Node(aesKey, "localhost", PORT);
+        String address = InetAddress.getLocalHost().getHostAddress();
 
-        int responseCode = apiPOSTNode("http://localhost:8080/api/putNode", "localhost:" + PORT);
+        Node thisNode = new Node(aesKey, address, PORT);
+
+        int responseCode = apiPOSTNode("http://" + serverAddress  + ":8080/api/putNode", "localhost:" + PORT);
         System.out.println("The server responded with:" + responseCode);
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
-                apiDELETENode("http://localhost:8080/api/deleteNode", "localhost:" + PORT);
+                apiDELETENode("http:// "+serverAddress +" /api/deleteNode", "localhost:" + PORT);
             } catch (IOException e) {
                 e.printStackTrace();
             }
