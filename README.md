@@ -140,4 +140,14 @@ https://evilinsult.com/generate_insult.php?lang=en&amp;type=json
 
 ## 🪤 Kjøring av tester
 
+Testene i repoet er allerede testet med gothub actions, og du kan se resultatet av siste build øverst i denne readme'en.
+
+Dersom du ønsker å kjøre testene selv kan du gjøre det ved å:
+
+1️⃣ Klone repoet
+
+2️⃣ Kjør kommandoen under i samme katalog som det klonede prosjektet 
+´´´
+mvn test
+´´´
 
