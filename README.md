@@ -18,27 +18,20 @@ Løsningen vår har en klient samt et nettverk av noder som er holdt styr på me
 
 ##### Slik ser vår implementasjon ut:
 
-1. Noder sender til serveren at de er aktive. Dersom de blir avslått blir de også fjernet fra serveren
-
-![1](https://user-images.githubusercontent.com/70323886/159466951-373fc490-d940-4092-9fbd-faab83ef55ab.PNG)
+1. Noder sender til serveren at de er aktive. Dersom de blir avslått blir de også fjernet fra serveren 
+ <img src="https://user-images.githubusercontent.com/70323886/159466951-373fc490-d940-4092-9fbd-faab83ef55ab.PNG" width="400" />
 
 2. Klienten gjør et kall til serveren og mottar en liste med alle aktive noder og generer en tilfeldig rute med et gitt antall noder.
- 
-![2](https://user-images.githubusercontent.com/70323886/159466961-8bb9378b-4c0c-40c8-8e4e-20a940ee340f.PNG)
+ <img src="https://user-images.githubusercontent.com/70323886/159466961-8bb9378b-4c0c-40c8-8e4e-20a940ee340f.PNG" width="400" />
 
 3. Klienten sender så sin Public Key (RSA) til hver av nodene i ruten. Nodene bruker denne nøkkelen til å kryptere sin AES krypteringsnøkkel og sende den til klienten. Klienten har nå en symmetrisk nøkkel for hver node som kan brukes til kryptering.
-
-![3](https://user-images.githubusercontent.com/70323886/159466965-15d83313-851f-474b-b868-c69bf61c4847.PNG)
+<img src="https://user-images.githubusercontent.com/70323886/159466965-15d83313-851f-474b-b868-c69bf61c4847.PNG" width="400" />
 
 4. Klienten krypterer nå adressen til API’en den vil gjøre et kall til med de symmetriske nøklene til nodene i ruten. Med hvert lag sender vi også med adressen til neste node i ruten. For hver node meldingen ankommer fjernes et lag med kryptering. Når vi ankommer siste node gjøres et api kall til den gitte adressen fra klienten.
-
-![4](https://user-images.githubusercontent.com/70323886/159466968-e48bd0d8-6a75-4aab-9a95-8a767389c0d3.PNG)
+<img src="https://user-images.githubusercontent.com/70323886/159466968-e48bd0d8-6a75-4aab-9a95-8a767389c0d3.PNG" width="400" />
 
 5. For å sende svaret tilbake brukes samme rute. Hver av nodene legger nå på et lag kryptering med sin symmetriske nøkkel. Når svaret så ankommer klienten kan den dekryptere alle lagene og lese meldingen.
-
-![5](https://user-images.githubusercontent.com/70323886/159466970-fc407c1e-92e2-4028-8a9f-5f655eb62a9a.PNG)
-
-
+<img src="https://user-images.githubusercontent.com/70323886/159466970-fc407c1e-92e2-4028-8a9f-5f655eb62a9a.PNG" width="400" />
 
 ### Implementert funksjonalitet:
 - Sende og motta meldinger som blir kryptert i et nettverk av noder
