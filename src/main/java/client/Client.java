@@ -33,7 +33,7 @@ public class Client {
         NodePool nodePool = new NodePool(apiGETRequest("http://" + serverAddress +":8080/api/getAllNodes"));
         Node[] circuit = nodePool.generateCircuit(3);
 
-        String message = "https://insult.mattbas.org/api/insult"; //API we want to call
+        String message = "lastNode-https://insult.mattbas.org/api/insult"; //API we want to call
 
         String encryptedRequest = layerEncryptMessage(circuit, message);
 

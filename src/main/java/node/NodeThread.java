@@ -72,8 +72,10 @@ public class NodeThread extends Thread {
                 AESEncryption aesEncryption = new AESEncryption();
                 String decryptedData = aesEncryption.decrypt(encryptedData, thisNode.getAesKey());
 
-                if(!decryptedData.contains("localhost")){
-                    String response = apiGETRequest(decryptedData);
+                String[] splittedDecryptedData = decryptedData.split("-", 2);
+
+                if(!splittedDecryptedData[0].equals("lastNode")){
+                    String response = apiGETRequest(splittedDecryptedData[1]);
 
                     System.out.println("encrypted with: " + Base64.getEncoder().encodeToString(thisNode.getAesKey().getEncoded()));
                     String encryptedResponse = aesEncryption.encrypt(response, thisNode.getAesKey());
