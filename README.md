@@ -140,10 +140,4 @@ https://evilinsult.com/generate_insult.php?lang=en&amp;type=json
 
 ## 🪤 Kjøring av tester
 
-## 📦 Nedlastninger:
 
-[Server](https://drive.google.com/file/d/11oPSGgrD7euX7Gd3Vi7d7JOvaoXATFlu/view?usp=sharing)
-
-[Node](https://drive.google.com/file/d/1SF11X4rKvyfakynLaX-m0tSH-ZNS7VSY/view?usp=sharing)
-
-[Klient](https://drive.google.com/file/d/1tqarrQyy7yyWcVXYYkOiFAsx7fQ9QQo7/view?usp=sharing)
