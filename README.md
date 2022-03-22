@@ -24,7 +24,7 @@ Løsningen vår har en klient samt et nettverk av noder som er holdt styr på me
 2. Klienten gjør et kall til serveren og mottar en liste med alle aktive noder og generer en tilfeldig rute med et gitt antall noder.
  <img src="https://user-images.githubusercontent.com/70323886/159466961-8bb9378b-4c0c-40c8-8e4e-20a940ee340f.PNG" width="400" />
 
-3. Klienten sender så sin Public Key (RSA) til hver av nodene i ruten. Nodene bruker denne nøkkelen til å kryptere sin AES krypteringsnøkkel og sende den til klienten. Klienten har nå en symmetrisk nøkkel for hver node som kan brukes til kryptering.
+3. Klienten sender så sin Public Key (RSA) til hver av nodene i ruten. Nodene bruker denne nøkkelen til å kryptere sin AES krypteringsnøkkel og sende den til klienten. Klienten har nå en symmetrisk nøkkel for hver node som kan brukes til kryptering og dekryptering.
 <img src="https://user-images.githubusercontent.com/70323886/159466965-15d83313-851f-474b-b868-c69bf61c4847.PNG" width="400" />
 
 4. Klienten krypterer nå adressen til API’en den vil gjøre et kall til med de symmetriske nøklene til nodene i ruten. Med hvert lag sender vi også med adressen til neste node i ruten. For hver node meldingen ankommer fjernes et lag med kryptering. Når vi ankommer siste node gjøres et api kall til den gitte adressen fra klienten.
