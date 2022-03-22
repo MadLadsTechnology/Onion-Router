@@ -90,7 +90,7 @@ Dersom du vil hoste en egen server last ned Onion-Router-Server.jar
 Deretter er det bare å kjøre kommandoen under i samme katalog som filen
 
 ```
-java -jar Onion-Server.jar
+java -jar OnionServer.jar
 ```
 
 Dette vil starte en Spring Boot server som kjører på port 8080
@@ -105,7 +105,7 @@ For å kjøre din egen node må du først laste ned jar filen:
 Kjør deretter kommandoen under i samme katalog som filen
 
 ```
-java -jar Onion-Router-Node.jar
+java -jar OnionNode.jar
 ```
 
 Etter at du har kjørt denne kommandoen må du spesifisere hvilken port du ønsker at noden skal kjøre på. Det er da lurt å velge porter som ikke er låste eller brukes av andre tjenester
@@ -120,7 +120,7 @@ Som tidligere er du nødt til å laste ned klienten
 Kjør deretter kommandoen under i samme katalog som filen
 
 ```
-java -jar Onion-Router-Client.jar
+java -jar OnionClient.jar
 ```
 
 Denne kommandoen vil starte opp en klient som du kan benytte for å koble deg til Onion nettverket. Etter at du skrevet kommandoen må du oppgi ip adressen til serveren (localhost hvis den kjører på den samme maskinen) Deretter må du skrive inn en api som du kan hente informasjon fra. 
