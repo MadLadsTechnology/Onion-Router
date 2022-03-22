@@ -10,6 +10,8 @@ Dette er et frivillig prosjekt tatt for å forbedre karakteren vår i emnet IDAT
 ### Vår løsning
 Dette har vi løst i programmeringspråket java. 
 
+For kryptering brukes både RSA og AES.
+
 Løsningen vår har en klient samt et nettverk av noder som er holdt styr på med en Rest server (https://github.com/MadLadsTechnology/Onion-RouterRestServer)
 
 Klienten kan sende inn en url til en API og motta et svar i form an en String.
