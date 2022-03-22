@@ -129,11 +129,11 @@ Denne kommandoen vil starte opp en klient som du kan benytte for å koble deg ti
 
 Her er noen APIer som vi synes er morsomme
 
-- Kanye West quote generator:
+##### Kanye West quote generator:
 ```
 https://api.kanye.rest
 ```
-- Insult generator:
+##### Insult generator:
 ```
 https://evilinsult.com/generate_insult.php?lang=en&amp;type=json
 ```
