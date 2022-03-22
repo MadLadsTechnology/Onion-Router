@@ -36,12 +36,12 @@ public class NodeMain {
 
         Node thisNode = new Node(aesKey, address, PORT);
 
-        int responseCode = apiPOSTNode("http://" + serverAddress  + ":8080/api/putNode", serverAddress +":" + PORT);
+        int responseCode = apiPOSTNode("http://" + serverAddress  + ":8080/api/putNode", address +":" + PORT);
         System.out.println("The server responded with:" + responseCode);
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
-                apiDELETENode("http:// "+serverAddress +" /api/deleteNode", serverAddress +":" + PORT);
+                apiDELETENode("http://"+serverAddress +"/api/deleteNode", address +":" + PORT);
             } catch (IOException e) {
                 e.printStackTrace();
             }
