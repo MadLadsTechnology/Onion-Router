@@ -138,16 +138,16 @@ https://api.kanye.rest
 https://evilinsult.com/generate_insult.php?lang=en&amp;type=json
 ```
 
-## 🪤 Kjøring av tester
+## 🧪 Kjøring av tester
 
-Testene i repoet er allerede testet med gothub actions, og du kan se resultatet av siste build øverst i denne readme'en.
+Testene i repoet er allerede testet med github actions, og du kan se resultatet av siste build øverst i denne readme'en eller under "Actions" i menyen over.
 
 Dersom du ønsker å kjøre testene selv kan du gjøre det ved å:
 
 1️⃣ Klone repoet
 
-2️⃣ Kjør kommandoen under i samme katalog som det klonede prosjektet 
-´´´
+2️⃣ Kjøre kommandoen under i samme katalog som det klonede prosjektet 
+```
 mvn test
-´´´
+```
 
