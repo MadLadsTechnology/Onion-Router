@@ -16,9 +16,9 @@ Løsningen vår har en klient samt et nettverk av noder som er holdt styr på me
 
 - Klienten kan sende inn en url som viser til en API og motta et svar i form av en string.
 
-##### Slik ser vår implementasjon ut(med bilder🥵):
+##### Slik ser vår implementasjon ut(med bilder😎):
 
-1️⃣ Noder sender til serveren at de er aktive. Dersom de blir avslått blir de også fjernet fra serveren 
+1️⃣ Noder sender til serveren at de er aktive. Dersom de blir avslått, blir de også fjernet fra serveren 
 
  <img src="https://user-images.githubusercontent.com/70323886/159466951-373fc490-d940-4092-9fbd-faab83ef55ab.PNG" width="400" />
 
@@ -46,7 +46,7 @@ Løsningen vår har en klient samt et nettverk av noder som er holdt styr på me
 - RSA kryptering for henting av AES nøkler fra noder
 - API-kall fra siste node
 - Responsen blir kryptert lagvis på vei tilbake, og dekrypteres av klienten.
-- Ruten er generert tilfeldig fra et gitt antall noder fra poolen.
+- Ruten er tilfeldig generert fra et gitt antall noder fra poolen.
   - Ruten er aldri sendt ut fra klienten
   - Nodene kan kun lese neste punkt i ruten, og vet forrige punkt. 
 
@@ -65,25 +65,29 @@ Løsningen vår har en klient samt et nettverk av noder som er holdt styr på me
 - JSON-Simple
   - Brukes til å formatere json både hos klienten og rest-serveren.
 - SpringBoot
-  - Vi bruker en springboot rest server for å lagre alle nodene vi har tilgjengelige. Her kan vi hente ut adressene og public keys til hver node. 
+  - Vi bruker en springboot rest server for å lagre alle nodene vi har tilgjengelige. Her kan vi hente ut alle aktive noder, samt registrere og slette individuelle noder.
 
 
 
-## Installasjon:
+## 💾 Installasjon:
+
+Disse instruksjonene vil gi deg en fungerende tjeneste på et lokalt nettverk.
 
 For å kjøre tjenesten kreves det:
-At Backendserveren kjører og at port 8080 er ledig
-Hvertfall 3 nodes som kjører og er koblet opp til serveren
-En tilgjengelig rest api som returnerer en streng,json,xml
-Disse instruksjonene vil gi deg en fungerende tjeneste på et lokalt nettverk
 
-### Server:
+✅ At Backendserveren kjører og at port 8080 er ledig
+
+✅ I hvert fall 3 nodes som kjører og er koblet opp til serveren
+
+✅ En tilgjengelig rest api som returnerer en streng,json,xml
+
+### 📡 Server:
 
 Dersom du vil hoste en egen server last ned Onion-Router-Server.jar
 
-[Server](https://drive.google.com/file/d/11oPSGgrD7euX7Gd3Vi7d7JOvaoXATFlu/view?usp=sharing)
+⬇️ [Server](https://drive.google.com/file/d/11oPSGgrD7euX7Gd3Vi7d7JOvaoXATFlu/view?usp=sharing)
 
-Dertter er det bare å kjøre kommanoen under i samme katalog som filen
+Deretter er det bare å kjøre kommandoen under i samme katalog som filen
 
 ```
 java -jar Onion-Server.jar
@@ -92,11 +96,11 @@ java -jar Onion-Server.jar
 Dette vil starte en Spring Boot server som kjører på port 8080
 Dersom du ønsker at denne skal være tilgjengelig for andre utenfor ditt lokale nettverk blir du nødt til å portforwarde [Link til hjelp](https://portforward.com/)
 
-### Noder:
+### 📠 Noder:
 
 For å kjøre din egen node må du først laste ned jar filen:
 
-[Node](https://drive.google.com/file/d/1SF11X4rKvyfakynLaX-m0tSH-ZNS7VSY/view?usp=sharing)
+⬇️ [Node](https://drive.google.com/file/d/1SF11X4rKvyfakynLaX-m0tSH-ZNS7VSY/view?usp=sharing)
 
 Kjør deretter kommandoen under i samme katalog som filen
 
@@ -107,11 +111,11 @@ java -jar Onion-Router-Node.jar
 Etter at du har kjørt denne kommandoen må du spesifisere hvilken port du ønsker at noden skal kjøre på. Det er da lurt å velge porter som ikke er låste eller brukes av andre tjenester
 Du blir deretter nødt til å spesifisere ip adressen på Serveren over, dersom du kjører begge på lokal maskin blir det da localhost. Etter dette vil noden koble seg til og printe ut 200:ok hvis alt stemte.
 
-### Klient:
+### 💻 Klient:
 
 Som tidligere er du nødt til å laste ned klienten
 
-[Klient](https://drive.google.com/file/d/1tqarrQyy7yyWcVXYYkOiFAsx7fQ9QQo7/view?usp=sharing)
+⬇️ [Klient](https://drive.google.com/file/d/1tqarrQyy7yyWcVXYYkOiFAsx7fQ9QQo7/view?usp=sharing)
 
 Kjør deretter kommandoen under i samme katalog som filen
 
@@ -121,21 +125,25 @@ java -jar Onion-Router-Client.jar
 
 Denne kommandoen vil starte opp en klient som du kan benytte for å koble deg til Onion nettverket. Etter at du skrevet kommandoen må du oppgi ip adressen til serveren (localhost hvis den kjører på den samme maskinen) Deretter må du skrive inn en api som du kan hente informasjon fra. 
 
-Noen gode APIer:
+### Noen gode APIer:
 
+Her er noen APIer som vi synes er morsomme
+
+#### Kanye West quote generator:
 ```
 https://api.kanye.rest
 ```
+#### Insult generator:
+```
+https://evilinsult.com/generate_insult.php?lang=en&amp;type=json
+```
 
+## 🪤 Kjøring av tester
 
-## Kjøring av tester
-
-## Nedlastninger:
+## 📦 Nedlastninger:
 
 [Server](https://drive.google.com/file/d/11oPSGgrD7euX7Gd3Vi7d7JOvaoXATFlu/view?usp=sharing)
 
 [Node](https://drive.google.com/file/d/1SF11X4rKvyfakynLaX-m0tSH-ZNS7VSY/view?usp=sharing)
 
 [Klient](https://drive.google.com/file/d/1tqarrQyy7yyWcVXYYkOiFAsx7fQ9QQo7/view?usp=sharing)
-
-## Laget av:
