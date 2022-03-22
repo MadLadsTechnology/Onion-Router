@@ -41,7 +41,7 @@ public class NodeMain {
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
-                apiDELETENode("http://"+serverAddress +"/api/deleteNode", address +":" + PORT);
+                apiDELETENode("http://"+serverAddress+":8080/api/deleteNode", address +":" + PORT);
             } catch (IOException e) {
                 e.printStackTrace();
             }
