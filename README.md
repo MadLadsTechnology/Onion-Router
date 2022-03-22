@@ -83,7 +83,7 @@ For å kjøre tjenesten kreves det:
 
 ### 📡 Server:
 
-Dersom du vil hoste en egen server last ned Onion-Router-Server.jar
+Dersom du vil hoste en egen server last ned OnionServer.jar
 
 ⬇️ [Server](https://drive.google.com/file/d/1FXLCOb9Vdzf4xF8mfLyq80TeLM46ZDdw/view?usp=sharing)
 
@@ -98,7 +98,7 @@ Dersom du ønsker at denne skal være tilgjengelig for andre utenfor ditt lokale
 
 ### 📠 Noder:
 
-For å kjøre din egen node må du først laste ned jar filen:
+For å kjøre din egen node må du først laste ned OnionNode.jar
 
 ⬇️ [Node](https://drive.google.com/file/d/1f-g4xEvFFl-h6DxZ2mJJBJOe9sAwhtu2/view?usp=sharing)
 
@@ -113,7 +113,7 @@ Du blir deretter nødt til å spesifisere ip adressen på Serveren over, dersom 
 
 ### 💻 Klient:
 
-Som tidligere er du nødt til å laste ned klienten
+For å kjøre en klient er det bare å laste ned OnionClient.jar
 
 ⬇️ [Klient](https://drive.google.com/file/d/1E_8g1pE5UYlhsK6RoMuHZs9U5vLQFrTV/view?usp=sharing)
 
