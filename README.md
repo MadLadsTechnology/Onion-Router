@@ -65,7 +65,7 @@ Løsningen vår har en klient samt et nettverk av noder som er holdt styr på me
 - JSON-Simple
   - Brukes til å formatere json både hos klienten og rest-serveren.
 - SpringBoot
-  - Vi bruker en springboot rest server for å lagre alle nodene vi har tilgjengelige. Her kan vi hente ut adressene og public keys til hver node. 
+  - Vi bruker en springboot rest server for å lagre alle nodene vi har tilgjengelige. Her kan vi hente ut alle aktive noder, samt registrere og slette individuelle noder. 
 
 
 
