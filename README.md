@@ -71,17 +71,21 @@ Løsningen vår har en klient samt et nettverk av noder som er holdt styr på me
 
 ## 💾 Installasjon:
 
+Disse instruksjonene vil gi deg en fungerende tjeneste på et lokalt nettverk.
+
 For å kjøre tjenesten kreves det:
-At Backendserveren kjører og at port 8080 er ledig
-Hvertfall 3 nodes som kjører og er koblet opp til serveren
-En tilgjengelig rest api som returnerer en streng,json,xml
-Disse instruksjonene vil gi deg en fungerende tjeneste på et lokalt nettverk
+
+✅ At Backendserveren kjører og at port 8080 er ledig
+
+✅ Hvertfall 3 nodes som kjører og er koblet opp til serveren
+
+✅ En tilgjengelig rest api som returnerer en streng,json,xml
 
 ### 📡 Server:
 
 Dersom du vil hoste en egen server last ned Onion-Router-Server.jar
 
-[Server](https://drive.google.com/file/d/11oPSGgrD7euX7Gd3Vi7d7JOvaoXATFlu/view?usp=sharing)
+⬇️ [Server](https://drive.google.com/file/d/11oPSGgrD7euX7Gd3Vi7d7JOvaoXATFlu/view?usp=sharing)
 
 Dertter er det bare å kjøre kommanoen under i samme katalog som filen
 
@@ -96,7 +100,7 @@ Dersom du ønsker at denne skal være tilgjengelig for andre utenfor ditt lokale
 
 For å kjøre din egen node må du først laste ned jar filen:
 
-[Node](https://drive.google.com/file/d/1SF11X4rKvyfakynLaX-m0tSH-ZNS7VSY/view?usp=sharing)
+⬇️ [Node](https://drive.google.com/file/d/1SF11X4rKvyfakynLaX-m0tSH-ZNS7VSY/view?usp=sharing)
 
 Kjør deretter kommandoen under i samme katalog som filen
 
@@ -111,7 +115,7 @@ Du blir deretter nødt til å spesifisere ip adressen på Serveren over, dersom 
 
 Som tidligere er du nødt til å laste ned klienten
 
-[Klient](https://drive.google.com/file/d/1tqarrQyy7yyWcVXYYkOiFAsx7fQ9QQo7/view?usp=sharing)
+⬇️ [Klient](https://drive.google.com/file/d/1tqarrQyy7yyWcVXYYkOiFAsx7fQ9QQo7/view?usp=sharing)
 
 Kjør deretter kommandoen under i samme katalog som filen
 
