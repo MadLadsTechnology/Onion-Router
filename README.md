@@ -68,5 +68,12 @@ Løsningen vår har en klient samt et nettverk av noder som er holdt styr på me
 
 ## Kjøring av tester
 
+## Nedlastninger:
 
+[Server](https://drive.google.com/file/d/11oPSGgrD7euX7Gd3Vi7d7JOvaoXATFlu/view?usp=sharing)
 
+[Node](https://drive.google.com/file/d/1SF11X4rKvyfakynLaX-m0tSH-ZNS7VSY/view?usp=sharing)
+
+[Klient](https://drive.google.com/file/d/1ra5Kxe1bR9RbT4D2TnwZ3wDKiVPwFYFA/view?usp=sharing)
+
+## Laget av:
