@@ -85,7 +85,7 @@ For å kjøre tjenesten kreves det:
 
 Dersom du vil hoste en egen server last ned Onion-Router-Server.jar
 
-⬇️ [Server](https://drive.google.com/file/d/11oPSGgrD7euX7Gd3Vi7d7JOvaoXATFlu/view?usp=sharing)
+⬇️ [Server](https://drive.google.com/file/d/116hS8y7WpOhWEDqePNOG5uFgznEOkx0x/view?usp=sharing)
 
 Deretter er det bare å kjøre kommandoen under i samme katalog som filen
 
@@ -100,7 +100,7 @@ Dersom du ønsker at denne skal være tilgjengelig for andre utenfor ditt lokale
 
 For å kjøre din egen node må du først laste ned jar filen:
 
-⬇️ [Node](https://drive.google.com/file/d/1SF11X4rKvyfakynLaX-m0tSH-ZNS7VSY/view?usp=sharing)
+⬇️ [Node](https://drive.google.com/file/d/1EHKr2wg1_0zITDW2LbyPs9rTk0YkI6Hp/view?usp=sharing)
 
 Kjør deretter kommandoen under i samme katalog som filen
 
@@ -115,7 +115,7 @@ Du blir deretter nødt til å spesifisere ip adressen på Serveren over, dersom 
 
 Som tidligere er du nødt til å laste ned klienten
 
-⬇️ [Klient](https://drive.google.com/file/d/1tqarrQyy7yyWcVXYYkOiFAsx7fQ9QQo7/view?usp=sharing)
+⬇️ [Klient](https://drive.google.com/file/d/1E_8g1pE5UYlhsK6RoMuHZs9U5vLQFrTV/view?usp=sharing)
 
 Kjør deretter kommandoen under i samme katalog som filen
 
