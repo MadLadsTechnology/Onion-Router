@@ -100,7 +100,7 @@ Dersom du ønsker at denne skal være tilgjengelig for andre utenfor ditt lokale
 
 For å kjøre din egen node må du først laste ned jar filen:
 
-⬇️ [Node](https://drive.google.com/file/d/1EHKr2wg1_0zITDW2LbyPs9rTk0YkI6Hp/view?usp=sharing)
+⬇️ [Node](https://drive.google.com/file/d/1f-g4xEvFFl-h6DxZ2mJJBJOe9sAwhtu2/view?usp=sharing)
 
 Kjør deretter kommandoen under i samme katalog som filen
 
