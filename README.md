@@ -83,7 +83,7 @@ For å kjøre tjenesten kreves det:
 
 ### 📡 Server:
 
-Dersom du vil hoste en egen server last ned OnionServer.jar
+Dersom du vil hoste en egen server last ned ```OnionServer.jar```
 
 ⬇️ [Server](https://github.com/MadLadsTechnology/Onion-Router/releases/download/Major-Version/OnionServer.jar)
 
@@ -98,7 +98,7 @@ Dersom du ønsker at denne skal være tilgjengelig for andre utenfor ditt lokale
 
 ### 📠 Noder:
 
-For å kjøre din egen node må du først laste ned OnionNode.jar
+For å kjøre din egen node må du først laste ned ```OnionNode.jar```
 
 ⬇️ [Node](https://github.com/MadLadsTechnology/Onion-Router/releases/download/Major-Version/OnionNode.jar)
 
@@ -113,7 +113,7 @@ Du blir deretter nødt til å spesifisere ip adressen på Serveren over, dersom 
 
 ### 💻 Klient:
 
-For å kjøre en klient er det bare å laste ned OnionClient.jar
+For å kjøre en klient er det bare å laste ned ```OnionClient.jar```
 
 ⬇️ [Klient](https://github.com/MadLadsTechnology/Onion-Router/releases/download/Major-Version/OnionClient.jar)
 
