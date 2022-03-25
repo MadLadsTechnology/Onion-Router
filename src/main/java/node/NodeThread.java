@@ -8,7 +8,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.util.Base64;
 
@@ -36,12 +35,7 @@ public class NodeThread extends Thread {
      */
     @Override
     public void run() {
-        RSAEncryption rsaEncryption = null;
-        try {
-            rsaEncryption = new RSAEncryption();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+        RSAEncryption rsaEncryption = new RSAEncryption();
         try {
             //Setting up readers and reads message from other
             InputStreamReader firstInputStream = new InputStreamReader(socket.getInputStream());

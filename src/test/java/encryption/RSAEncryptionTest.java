@@ -2,8 +2,6 @@ package encryption;
 
 import org.junit.jupiter.api.Assertions;
 
-import java.nio.charset.StandardCharsets;
-import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 class RSAEncryptionTest {
