@@ -46,6 +46,7 @@ Løsningen vår har en klient samt et nettverk av noder som er holdt styr på me
 - RSA kryptering for henting av AES nøkler fra noder
 - API-kall fra siste node
 - Responsen blir kryptert lagvis på vei tilbake, og dekrypteres av klienten.
+- Nettverket har ingen grense på antall aktive noder, jo flere jo sikrere.
 - Ruten er tilfeldig generert fra et gitt antall noder fra poolen.
   - Ruten er aldri sendt ut fra klienten
   - Nodene kan kun lese neste punkt i ruten, og vet forrige punkt. 
