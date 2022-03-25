@@ -16,7 +16,9 @@ Løsningen vår har en klient samt et nettverk av noder som er holdt styr på me
 
 - Klienten kan sende inn en url som viser til en API og motta et svar i form av en string.
 
-- JavaDoc for dette repoet finner du her: [JavaDoc]( https://madladstechnology.github.io/Onion-Router/)
+- JavaDoc for dette prosjektet:
+  - [Noder og klient]( https://madladstechnology.github.io/Onion-Router/)
+  - [Server](https://madladstechnology.github.io/Onion-RouterRestServer/)
 
 ##### Slik ser vår implementasjon ut(med bilder😎):
 
