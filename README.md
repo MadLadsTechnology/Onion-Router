@@ -46,6 +46,7 @@ Løsningen vår har en klient samt et nettverk av noder som er holdt styr på me
 - RSA kryptering for henting av AES nøkler fra noder
 - API-kall fra siste node
 - Responsen blir kryptert lagvis på vei tilbake, og dekrypteres av klienten.
+- Nettverket har ingen grense på antall aktive noder, jo flere jo sikrere.
 - Ruten er tilfeldig generert fra et gitt antall noder fra poolen.
   - Ruten er aldri sendt ut fra klienten
   - Nodene kan kun lese neste punkt i ruten, og vet forrige punkt. 
@@ -69,7 +70,7 @@ Løsningen vår har en klient samt et nettverk av noder som er holdt styr på me
 
 
 
-## 💾 Installasjon:
+## 💾 Installasjon og bruk:
 
 Disse instruksjonene vil gi deg en fungerende tjeneste på et lokalt nettverk.
 
@@ -85,7 +86,7 @@ For å kjøre tjenesten kreves det:
 
 Dersom du vil hoste en egen server last ned ```OnionServer.jar```
 
-⬇️ [Server](https://github.com/MadLadsTechnology/Onion-Router/releases/download/Major-Version/OnionServer.jar)
+⬇️ [Server](https://github.com/MadLadsTechnology/Onion-Router/releases/download/v1.1.0/OnionServer.jar)
 
 Deretter er det bare å kjøre kommandoen under i samme katalog som filen
 
@@ -100,7 +101,7 @@ Dersom du ønsker at denne skal være tilgjengelig for andre utenfor ditt lokale
 
 For å kjøre din egen node må du først laste ned ```OnionNode.jar```
 
-⬇️ [Node](https://github.com/MadLadsTechnology/Onion-Router/releases/download/Major-Version/OnionNode.jar)
+⬇️ [Node](https://github.com/MadLadsTechnology/Onion-Router/releases/download/v1.1.0/OnionNode.jar)
 
 Kjør deretter kommandoen under i samme katalog som filen
 
@@ -115,7 +116,7 @@ Du blir deretter nødt til å spesifisere ip adressen på Serveren over, dersom 
 
 For å kjøre en klient er det bare å laste ned ```OnionClient.jar```
 
-⬇️ [Klient](https://github.com/MadLadsTechnology/Onion-Router/releases/download/Major-Version/OnionClient.jar)
+⬇️ [Klient](https://github.com/MadLadsTechnology/Onion-Router/releases/download/v1.1.0/OnionClient.jar)
 
 Kjør deretter kommandoen under i samme katalog som filen
 

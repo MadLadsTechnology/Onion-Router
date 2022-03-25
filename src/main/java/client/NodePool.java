@@ -99,6 +99,7 @@ public class NodePool {
 
         RSAEncryption rsaEncryption = new RSAEncryption();
 
+        System.out.println("\n***Fetching secretKeys from nodes in circuit***");
         for (Node node : circuit) {
             String host = node.getHost();
             int port = node.getPort();
@@ -108,7 +109,7 @@ public class NodePool {
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
                 if (clientSocket.isConnected()) {
-                    System.out.println("Connected to: " + host + ":" + port);
+                    System.out.println("Fetching from: " + host + ":" + port);
                 }
 
                 out.println("key"); //type of connection
@@ -128,7 +129,6 @@ public class NodePool {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }
 }
