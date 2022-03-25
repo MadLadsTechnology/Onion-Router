@@ -21,12 +21,16 @@ public class AESEncryption {
      * Generates a random AES key
      *
      * @return the generated key
-     * @throws NoSuchAlgorithmException
      */
-    public SecretKey getAESKey() throws NoSuchAlgorithmException {
-        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
-        keyGen.init(256, SecureRandom.getInstanceStrong());
-        return keyGen.generateKey();
+    public SecretKey getAESKey() {
+        try{
+            KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+            keyGen.init(256, SecureRandom.getInstanceStrong());
+            return keyGen.generateKey();
+        }catch(NoSuchAlgorithmException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
 

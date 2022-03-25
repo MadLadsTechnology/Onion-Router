@@ -83,14 +83,14 @@ For å kjøre tjenesten kreves det:
 
 ### 📡 Server:
 
-Dersom du vil hoste en egen server last ned Onion-Router-Server.jar
+Dersom du vil hoste en egen server last ned ```OnionServer.jar```
 
-⬇️ [Server](https://drive.google.com/file/d/11oPSGgrD7euX7Gd3Vi7d7JOvaoXATFlu/view?usp=sharing)
+⬇️ [Server](https://github.com/MadLadsTechnology/Onion-Router/releases/download/Major-Version/OnionServer.jar)
 
 Deretter er det bare å kjøre kommandoen under i samme katalog som filen
 
 ```
-java -jar Onion-Server.jar
+java -jar OnionServer.jar
 ```
 
 Dette vil starte en Spring Boot server som kjører på port 8080
@@ -98,14 +98,14 @@ Dersom du ønsker at denne skal være tilgjengelig for andre utenfor ditt lokale
 
 ### 📠 Noder:
 
-For å kjøre din egen node må du først laste ned jar filen:
+For å kjøre din egen node må du først laste ned ```OnionNode.jar```
 
-⬇️ [Node](https://drive.google.com/file/d/1SF11X4rKvyfakynLaX-m0tSH-ZNS7VSY/view?usp=sharing)
+⬇️ [Node](https://github.com/MadLadsTechnology/Onion-Router/releases/download/Major-Version/OnionNode.jar)
 
 Kjør deretter kommandoen under i samme katalog som filen
 
 ```
-java -jar Onion-Router-Node.jar
+java -jar OnionNode.jar
 ```
 
 Etter at du har kjørt denne kommandoen må du spesifisere hvilken port du ønsker at noden skal kjøre på. Det er da lurt å velge porter som ikke er låste eller brukes av andre tjenester
@@ -113,14 +113,14 @@ Du blir deretter nødt til å spesifisere ip adressen på Serveren over, dersom 
 
 ### 💻 Klient:
 
-Som tidligere er du nødt til å laste ned klienten
+For å kjøre en klient er det bare å laste ned ```OnionClient.jar```
 
-⬇️ [Klient](https://drive.google.com/file/d/1tqarrQyy7yyWcVXYYkOiFAsx7fQ9QQo7/view?usp=sharing)
+⬇️ [Klient](https://github.com/MadLadsTechnology/Onion-Router/releases/download/Major-Version/OnionClient.jar)
 
 Kjør deretter kommandoen under i samme katalog som filen
 
 ```
-java -jar Onion-Router-Client.jar
+java -jar OnionClient.jar
 ```
 
 Denne kommandoen vil starte opp en klient som du kan benytte for å koble deg til Onion nettverket. Etter at du skrevet kommandoen må du oppgi ip adressen til serveren (localhost hvis den kjører på den samme maskinen) Deretter må du skrive inn en api som du kan hente informasjon fra. 
@@ -129,21 +129,25 @@ Denne kommandoen vil starte opp en klient som du kan benytte for å koble deg ti
 
 Her er noen APIer som vi synes er morsomme
 
-#### Kanye West quote generator:
+##### Kanye West quote generator:
 ```
 https://api.kanye.rest
 ```
-#### Insult generator:
+##### Insult generator:
 ```
 https://evilinsult.com/generate_insult.php?lang=en&amp;type=json
 ```
 
-## 🪤 Kjøring av tester
+## 🧪 Kjøring av tester
 
-## 📦 Nedlastninger:
+Testene i repoet er allerede testet med github actions, og du kan se resultatet av siste build øverst i denne readme'en eller under "Actions" i menyen over.
 
-[Server](https://drive.google.com/file/d/11oPSGgrD7euX7Gd3Vi7d7JOvaoXATFlu/view?usp=sharing)
+Dersom du ønsker å kjøre testene selv kan du gjøre det ved å:
 
-[Node](https://drive.google.com/file/d/1SF11X4rKvyfakynLaX-m0tSH-ZNS7VSY/view?usp=sharing)
+1️⃣ Klone repoet
 
-[Klient](https://drive.google.com/file/d/1tqarrQyy7yyWcVXYYkOiFAsx7fQ9QQo7/view?usp=sharing)
+2️⃣ Kjøre kommandoen under i samme katalog som det klonede prosjektet 
+```
+mvn test
+```
+
