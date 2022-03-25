@@ -34,7 +34,7 @@ public class Client {
 
 
         //Generating a node circuit to send encrypted message
-        NodePool nodePool = null;
+        NodePool nodePool;
         try {
             nodePool = new NodePool(apiGETRequest("http://" + serverAddress +":8080/api/getAllNodes"));
         } catch (Exception e) {
@@ -52,6 +52,7 @@ public class Client {
         String host = circuit[0].getHost();
         int port = circuit[0].getPort();
         try {
+            System.out.println("\n***Performing anonymous API call thru circuit***");
             Socket clientSocket = new Socket(host, port);
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -65,6 +66,7 @@ public class Client {
                 //receiving and printing response
                 String encryptedResponse = in.readLine();
 
+                System.out.println("\n***The API returned the following string***");
                 System.out.println(layerDecryptMessage(circuit, encryptedResponse));
             }
 
@@ -105,8 +107,8 @@ public class Client {
     private static String layerDecryptMessage(Node[] circuit, String string){
 
         AESEncryption aesEncryption = new AESEncryption();
-        for(int i = 0; i< circuit.length; i++){
-            string = aesEncryption.decrypt(string, circuit[i].getAesKey());
+        for (Node node : circuit) {
+            string = aesEncryption.decrypt(string, node.getAesKey());
         }
 
         return string;

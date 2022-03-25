@@ -18,11 +18,11 @@ import java.util.Base64;
 
 public class NodePool {
     private final String JSON_DATA;
-    private final ArrayList<Node> nodePool = new ArrayList<>();;
+    private final ArrayList<Node> nodePool = new ArrayList<>();
 
     /**
      * Connects to the nodeServerApi and fetches all active nodes in the network
-     * @throws Exception
+     * @throws Exception if the data can't be read
      */
     public NodePool(String JSON_DATA) throws Exception {
         this.JSON_DATA = JSON_DATA;
@@ -52,7 +52,7 @@ public class NodePool {
     private Node parseNodeObject(JSONObject node){
         //Get node's public key
         String host = (String) node.get("ip");
-        int port = Integer.parseInt(String.valueOf((long) node.get("port")));;
+        int port = Integer.parseInt(String.valueOf((long) node.get("port")));
 
         return new Node( host, port);
     }
@@ -97,6 +97,7 @@ public class NodePool {
 
         RSAEncryption rsaEncryption = new RSAEncryption();
 
+        System.out.println("\n***Fetching secretKeys from nodes in circuit***");
         for (Node node : circuit) {
             String host = node.getHost();
             int port = node.getPort();
@@ -106,7 +107,7 @@ public class NodePool {
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
                 if (clientSocket.isConnected()) {
-                    System.out.println("Connected to: " + host + ":" + port);
+                    System.out.println("Fetching from: " + host + ":" + port);
                 }
 
                 out.println("key"); //type of connection
@@ -126,7 +127,6 @@ public class NodePool {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }
 }

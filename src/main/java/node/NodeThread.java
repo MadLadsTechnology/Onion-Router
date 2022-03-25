@@ -71,7 +71,6 @@ public class NodeThread extends Thread {
                 if(splittedDecryptedData[0].equals("lastNode")){
                     String response = apiGETRequest(splittedDecryptedData[1]);
 
-                    System.out.println("encrypted with: " + Base64.getEncoder().encodeToString(thisNode.getAesKey().getEncoded()));
                     String encryptedResponse = aesEncryption.encrypt(response, thisNode.getAesKey());
 
                     firstWriter.println(encryptedResponse);
