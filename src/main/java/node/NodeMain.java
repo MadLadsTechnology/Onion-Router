@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.Scanner;
 
 import static API.APIService.apiDELETENode;
@@ -21,7 +22,7 @@ import static API.APIService.apiPOSTNode;
  */
 public class NodeMain {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
         AESEncryption aesEncryption = new AESEncryption();
         SecretKey aesKey = aesEncryption.getAESKey();
@@ -32,11 +33,21 @@ public class NodeMain {
         System.out.println("Please specify the address of the server:");
         String serverAddress = in.nextLine();
 
-        String address = InetAddress.getLocalHost().getHostAddress();
+        String address = "";
+        try {
+            address = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
 
         Node thisNode = new Node(aesKey, address, PORT);
 
-        int responseCode = apiPOSTNode("http://" + serverAddress  + ":8080/api/putNode", address +":" + PORT);
+        int responseCode = 0;
+        try {
+            responseCode = apiPOSTNode("http://" + serverAddress  + ":8080/api/putNode", address +":" + PORT);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         System.out.println("The server responded with:" + responseCode);
 
         Thread thread = new Thread (() -> {
@@ -48,19 +59,26 @@ public class NodeMain {
         });
         thread.start();
 
+        String finalAddress = address;
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
-                apiDELETENode("http://"+serverAddress+":8080/api/deleteNode", address +":" + PORT);
+                apiDELETENode("http://"+serverAddress+":8080/api/deleteNode", finalAddress +":" + PORT);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }));
 
-        ServerSocket serverSocket = new ServerSocket(PORT);
+        ServerSocket serverSocket = null;
+        try {
+            serverSocket = new ServerSocket(PORT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         while(true) {
             Socket socket;
 
             try {
+                assert serverSocket != null;
                 socket = serverSocket.accept();
             } catch (IOException e) {
                 throw new RuntimeException(
