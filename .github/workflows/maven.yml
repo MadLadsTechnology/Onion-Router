@@ -12,7 +12,6 @@ on:
 jobs:     
   test:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: test
@@ -24,4 +23,20 @@ jobs:
     - name: Test
       run: mvn test
       
-      
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: setup java
+      uses: actions/setup-java@v2
+      with:
+        java-version: '16'
+        distribution: 'temurin'
+        cache: maven
+    - name: build docs
+      run: mvn javadoc:javadoc -f pom.xml
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@v4.2.5
+      with:
+        branch: gh-pages
+        folder: site/apidocs 
