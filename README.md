@@ -70,7 +70,7 @@ Løsningen vår har en klient samt et nettverk av noder som er holdt styr på me
 
 
 
-## 💾 Installasjon:
+## 💾 Installasjon og bruk:
 
 Disse instruksjonene vil gi deg en fungerende tjeneste på et lokalt nettverk.
 
