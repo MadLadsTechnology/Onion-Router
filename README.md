@@ -2,6 +2,11 @@
 
 Last build: ![example workflow](https://github.com/MadLadsTechnology/Onion-Router/actions/workflows/maven.yml/badge.svg)
 
+Lenke til siste CI/CD Kjøring:
+
+- [Onion-Router](https://github.com/MadLadsTechnology/Onion-Router/actions/runs/2040447424)
+- [Onion-RouterRestServer](https://github.com/MadLadsTechnology/Onion-RouterRestServer/actions/runs/2040374813)
+
 Dette er et frivillig prosjekt tatt for å forbedre karakteren vår i emnet IDATT2104 - Nettverksprogrammering.
 
 ## 📜 Oppgaven:
